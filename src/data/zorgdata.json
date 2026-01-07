@@ -29,7 +29,7 @@
     "PFR": {
       "term_fr": "Plateforme d’accompagnement et de répit",
       "term_nl": "Ondersteuningsplatform voor mantelzorgers",
-      [cite_start]"uitleg": "Biedt advies, ondersteuning en tijdelijke ontlasting voor naasten van ouderen of mensen met een beperking[cite: 119, 120].",
+      [cite_start]"uitleg": "Biedt advies, ondersteuning en tijdelijke ontlasting voor naasten van ouderen of mensen met een beperking[cite: 119].",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/art-pfr"
     },
     "adj": {
@@ -41,71 +41,78 @@
     "ehpad": {
       "term_fr": "EHPAD",
       "term_nl": "Verpleeghuis (Medisch)",
-      [cite_start]"uitleg": "Medische zorginstellingen voor ouderen die dagelijks hulp en verzorging nodig hebben[cite: 151, 152].",
+      [cite_start]"uitleg": "Medische zorginstellingen voor ouderen (60+) die dagelijks hulp en verzorging nodig hebben[cite: 151, 152].",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/art-ehpad"
     },
     "apa": {
       "term_fr": "APA (Allocation Personnalisée d'Autonomie)",
       "term_nl": "Zorgtoelage Autonomie",
-      [cite_start]"uitleg": "Financiële tegemoetkoming voor ouderen met verlies van autonomie, zowel thuis als in een instelling[cite: 97, 109].",
+      [cite_start]"uitleg": "Financiële tegemoetkoming voor ouderen met verlies van autonomie, thuis of in een instelling[cite: 109].",
       "url": "https://www.service-public.fr/particuliers/vosdroits/F10009"
     },
     "ssiad": {
       "term_fr": "SSIAD",
       "term_nl": "Thuisverpleging",
-      [cite_start]"uitleg": "Verleent verpleegkundige zorg aan huis op medisch voorschrift[cite: 133, 134].",
+      [cite_start]"uitleg": "Verleent verpleegkundige zorg aan huis op medisch voorschrift voor ouderen en mensen met een beperking[cite: 133, 134].",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/art-ssiad"
+    },
+    "heb_temp": {
+      "term_fr": "Hébergement temporaire",
+      "term_nl": "Tijdelijk verblijf",
+      [cite_start]"uitleg": "Kortdurende opvang in een instelling of bij een gastgezin voor ouderen die thuis wonen[cite: 106, 107].",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/art-heb-temp"
     }
   },
   "contacten": {
     "instants_aidants": {
       "naam": "Instants Aidants (MSA)",
       "nummer": "0805 690 630",
-      [cite_start]"details": "Gratis sociale- en gezondheidsondersteuning voor alle mantelzorgers (18+)[cite: 1, 2].",
-      [cite_start]"tijden": "Ma-Vr, 09:00 - 17:00[cite: 2]."
+      [cite_start]"details": "Gratis sociale- en gezondheidsondersteuning voor mantelzorgers (18+) via de MSA[cite: 1].",
+      "tijden": "Ma-Vr, 09:00 - 17:00."
     },
     "france_parkinson": {
       "naam": "France Parkinson",
       "nummer": "01 43 43 43 15",
       "email": "soutien@franceparkinson.fr",
       [cite_start]"details": "Luisterend oor, financiële hulpvragen en psychologische steun[cite: 5].",
-      [cite_start]"tijden": "Ma-Vr, 09:30 - 12:30[cite: 5]."
+      "tijden": "Ma-Vr, 09:30 - 12:30."
     },
     "solitud_ecoute": {
       "naam": "Solitud'écoute",
       "nummer": "0 800 47 47 88",
-      [cite_start]"details": "Anonieme hulplijn voor 50-plussers die last hebben van eenzaamheid of isolatie[cite: 42, 44].",
-      [cite_start]"tijden": "Dagelijks, 15:00 - 20:00[cite: 42]."
+      [cite_start]"details": "Anonieme hulplijn voor 50-plussers die lijden onder eenzaamheid of isolatie[cite: 42].",
+      "tijden": "Dagelijks, 15:00 - 20:00."
     },
     "maltraitance": {
       "naam": "Agir contre les maltraitances",
       "nummer": "39 77",
       "email": "3977@3977contrelamaltraitance.org",
-      [cite_start]"details": "Nationaal nummer tegen ouderenmishandeling en misstanden[cite: 37, 38].",
-      [cite_start]"tijden": "24/7 bereikbaar via diverse kanalen[cite: 40]."
+      [cite_start]"details": "Nationaal nummer tegen ouderenmishandeling en misstanden[cite: 37].",
+      [cite_start]"tijden": "24/7 bereikbaar via website/email; telefonisch in overleg[cite: 37, 39]."
     },
     "samu": {
       "naam": "SAMU (Medische Spoed)",
       "nummer": "15",
-      [cite_start]"details": "Medische noodlijn voor dringende hulp en triage[cite: 61].",
-      [cite_start]"tijden": "24/7[cite: 61]."
+      [cite_start]"details": "Nationale noodlijn voor dringende medische hulp en triage[cite: 61].",
+      [cite_start]"tijden": "24/7 bereikbaar[cite: 61]."
+    },
+    "avec_nos_proches": {
+      "naam": "Avec nos proches",
+      "nummer": "01 84 72 94 72",
+      [cite_start]"details": "Lijn voor info en lotgenotencontact om isolatie en uitputting bij mantelzorgers te voorkomen[cite: 8].",
+      [cite_start]"tijden": "Dagelijks, 08:00 - 22:00[cite: 8]."
     }
   },
   "annuaires": {
     "ehpad_zoeker": {
       "naam": "EHPAD & Prijsvergelijker",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-et-comparateur-de-prix-et-restes-a-charge",
-      [cite_start]"uitleg": "Officiële tool om verpleeghuizen te zoeken en prijzen te vergelijken[cite: 161]."
+      [cite_start]"uitleg": "Officiële tool om verpleeghuizen te zoeken en prijzen te vergelijken[cite: 156, 161]."
     },
     "clic_zoeker": {
       "naam": "CLIC / Lokale informatiepunten",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/departements/pil",
-      [cite_start]"uitleg": "Vind het lokale loket in uw departement voor persoonlijk advies[cite: 162]."
-    },
-    "boussole_aidants": {
-      "naam": "Ma Boussole Aidants",
-      "url": "https://maboussoleaidants.fr",
-      [cite_start]"uitleg": "Register voor verenigingen en lokale hulp voor mantelzorgers[cite: 165]."
+      [cite_start]"uitleg": "Vind het lokale informatiepunt (PIL/CLIC) in uw departement voor advies op maat[cite: 122, 162]."
     }
   }
 }
