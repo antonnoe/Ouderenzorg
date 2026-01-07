@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --maroon: #800000;
+}
+
+body {
+  color: #111;
+  background: white;
+  /* Ruime regelafstand voor optimale leesbaarheid en rust [cite: 2025-12-09] */
+  line-height: 1.8em;
+}
+
+/* Koppen in Poppins kleur Maroon [cite: 2025-12-09] */
+h1, h2, h3, h4 {
+  color: var(--maroon);
+  font-family: 'Poppins', sans-serif;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Broodtekst in Mulish [cite: 2025-12-09] */
+p, li, span, div {
+  font-family: 'Mulish', sans-serif;
+}
