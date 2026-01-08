@@ -11,25 +11,25 @@ type View = 'dashboard' | 'category' | 'definities' | 'contacten' | 'annuaires';
 function cleanText(s?: string) {
   if (!s) return '';
   return s
-    .replace(/\s*\[cite:[^\]]+\]\s*/g, ' ')   // verwijder [cite: ...]
+    .replace(/\s*\[cite:[^\]]+\]\s*/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
-// alias → canonical (zodat “Thuiszorg” ook SSIAD vindt, etc.)
-const queryAliases: Array<[string, string]> = [
-  ['thuiszorg', 'ssiad'],
-  ['zorg aan huis', 'ssiad'],
-  ['thuisverpleging', 'ssiad'],
-  ['verzorgingshuis', 'ehpad'],
-  ['verpleeghuis', 'ehpad'],
-  ['dagopvang', 'adj'],
-  ['dagbesteding', 'adj'],
-  ['tijdelijk verblijf', 'heb_temp'],
-  ['respijtzorg', 'heb_temp pfr'],
-  ['mantelzorg', 'pfr'],
-  ['zorgtoelage', 'apa'],
-  ['autonomie', 'apa']
+// alias → extra zoektermen (OR)
+const queryAliases: Array<[string, string[]]> = [
+  ['thuiszorg', ['ssiad', 'soins infirmiers', 'domicile']],
+  ['zorg aan huis', ['ssiad', 'domicile']],
+  ['thuisverpleging', ['ssiad', 'infirmier', 'domicile']],
+  ['verzorgingshuis', ['ehpad', 'maison de retraite', 'établissement']],
+  ['verpleeghuis', ['ehpad', 'maison de retraite', 'établissement']],
+  ['dagopvang', ['accueil de jour', 'adj']],
+  ['dagbesteding', ['accueil de jour', 'adj']],
+  ['tijdelijk verblijf', ['hébergement temporaire', 'heb_temp']],
+  ['respijtzorg', ['répit', 'pfr', 'heb_temp']],
+  ['mantelzorg', ['aidant', 'pfr']],
+  ['zorgtoelage', ['apa']],
+  ['autonomie', ['apa']]
 ];
 
 export default function Home() {
@@ -37,19 +37,29 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<ZorgCategory | null>(null);
   const [q, setQ] = useState('');
 
-  const query = useMemo(() => {
+  // Build OR-query list: the raw query + synonym expansions
+  const queryList = useMemo(() => {
     const base = q.trim().toLowerCase();
-    if (!base) return '';
-    let expanded = base;
-    for (const [alias, canon] of queryAliases) {
-      if (expanded.includes(alias)) expanded += ` ${canon}`;
+    if (!base) return [] as string[];
+
+    const list = new Set<string>();
+    list.add(base);
+
+    // also add individual tokens from base (helps when user types multiple words)
+    base.split(/\s+/).forEach((t) => t && list.add(t));
+
+    for (const [alias, extras] of queryAliases) {
+      if (base.includes(alias)) {
+        extras.forEach((e) => e && list.add(e.toLowerCase()));
+      }
     }
-    return expanded;
+
+    return Array.from(list).filter(Boolean);
   }, [q]);
 
   const filteredDefinitions = useMemo(() => {
     const entries = Object.entries(zorgData.definitions || {});
-    if (!query) return entries;
+    if (queryList.length === 0) return entries;
 
     return entries.filter(([key, def]) => {
       const hay = [
@@ -62,13 +72,14 @@ export default function Home() {
         .join(' ')
         .toLowerCase();
 
-      return query.split(/\s+/).every((token) => hay.includes(token));
+      // OR match: any query term/phrase matches
+      return queryList.some((term) => hay.includes(term));
     });
-  }, [query]);
+  }, [queryList]);
 
   const filteredContacts = useMemo(() => {
     const entries = Object.entries(zorgData.contacten || {});
-    if (!query) return entries;
+    if (queryList.length === 0) return entries;
 
     return entries.filter(([key, c]) => {
       const hay = [
@@ -82,9 +93,9 @@ export default function Home() {
         .join(' ')
         .toLowerCase();
 
-      return query.split(/\s+/).every((token) => hay.includes(token));
+      return queryList.some((term) => hay.includes(term));
     });
-  }, [query]);
+  }, [queryList]);
 
   const openCategory = (cat: ZorgCategory) => {
     setSelectedCategory(cat);
@@ -300,7 +311,7 @@ export default function Home() {
 
           <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Begrippen (NL → FR)</h2>
-            <p className="text-gray-700 mb-5">Typ om te filteren.</p>
+            <p className="text-gray-700 mb-5">Typ om te filteren (ook op synoniemen zoals “thuiszorg”, “verzorgingshuis”).</p>
 
             <input
               value={q}
