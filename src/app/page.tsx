@@ -10,10 +10,13 @@ type View = 'dashboard' | 'category' | 'definities' | 'contacten' | 'annuaires';
 
 function cleanText(s?: string) {
   if (!s) return '';
-  return s
-    .replace(/\s*\[cite:[^\]]+\]\s*/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return s.replace(/\s*\[cite:[^\]]+\]\s*/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// Google Translate wrapper (FR/auto -> NL)
+function nlTranslateUrl(url: string) {
+  const u = encodeURIComponent(url);
+  return `https://translate.google.com/translate?sl=auto&tl=nl&u=${u}`;
 }
 
 // alias → extra zoektermen (OR)
@@ -37,21 +40,17 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<ZorgCategory | null>(null);
   const [q, setQ] = useState('');
 
-  // Build OR-query list: the raw query + synonym expansions
+  // OR-query list: raw query + expansions
   const queryList = useMemo(() => {
     const base = q.trim().toLowerCase();
     if (!base) return [] as string[];
 
     const list = new Set<string>();
     list.add(base);
-
-    // also add individual tokens from base (helps when user types multiple words)
     base.split(/\s+/).forEach((t) => t && list.add(t));
 
     for (const [alias, extras] of queryAliases) {
-      if (base.includes(alias)) {
-        extras.forEach((e) => e && list.add(e.toLowerCase()));
-      }
+      if (base.includes(alias)) extras.forEach((e) => e && list.add(e.toLowerCase()));
     }
 
     return Array.from(list).filter(Boolean);
@@ -62,17 +61,10 @@ export default function Home() {
     if (queryList.length === 0) return entries;
 
     return entries.filter(([key, def]) => {
-      const hay = [
-        key,
-        cleanText(def.term_nl),
-        cleanText(def.term_fr),
-        cleanText(def.uitleg),
-        def.url || ''
-      ]
+      const hay = [key, cleanText(def.term_nl), cleanText(def.term_fr), cleanText(def.uitleg), def.url || '']
         .join(' ')
         .toLowerCase();
 
-      // OR match: any query term/phrase matches
       return queryList.some((term) => hay.includes(term));
     });
   }, [queryList]);
@@ -115,9 +107,7 @@ export default function Home() {
       <header className="mb-8 md:mb-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">
-              Mijn Zorgkompas
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">Mijn Zorgkompas</h1>
             <p className="text-base md:text-lg text-gray-700 mt-2">
               NL-dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.
             </p>
@@ -155,9 +145,7 @@ export default function Home() {
       {view === 'dashboard' && (
         <section className="space-y-10">
           <div className="bg-softYellow/35 border border-maroon/10 rounded-3xl p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-3">
-              Start met een vraag
-            </h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-3">Start met een vraag</h2>
             <p className="text-gray-700 mb-6">
               Kies wat het beste past. U krijgt daarna NL-uitleg, belangrijke begrippen en directe contactopties.
               Officiële Franse bronnen blijven beschikbaar als verdieping.
@@ -170,27 +158,17 @@ export default function Home() {
                   onClick={() => openCategory(cat)}
                   className="text-left p-6 rounded-2xl bg-white border-2 border-maroon/15 hover:border-maroon hover:bg-softYellow transition shadow-sm"
                 >
-                  <h3 className="text-xl font-bold font-poppins text-maroon mb-1">
-                    {cleanText(cat.label_nl)}
-                  </h3>
-                  <div className="text-sm italic text-maroon/70 mb-3">
-                    {cleanText(cat.label_fr)}
-                  </div>
-                  <p className="text-gray-700 text-sm">
-                    {cleanText(cat.description)}
-                  </p>
+                  <h3 className="text-xl font-bold font-poppins text-maroon mb-1">{cleanText(cat.label_nl)}</h3>
+                  <div className="text-sm italic text-maroon/70 mb-3">{cleanText(cat.label_fr)}</div>
+                  <p className="text-gray-700 text-sm">{cleanText(cat.description)}</p>
                 </button>
               ))}
             </div>
           </div>
 
           <div className="rounded-3xl p-6 md:p-8 border border-maroon/10 bg-white">
-            <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">
-              Snel zoeken (begrippen + nummers)
-            </h3>
-            <p className="text-gray-700 mb-4">
-              Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.
-            </p>
+            <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">Snel zoeken (begrippen + nummers)</h3>
+            <p className="text-gray-700 mb-4">Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.</p>
 
             <div className="flex flex-col md:flex-row gap-3 md:items-center">
               <input
@@ -225,12 +203,8 @@ export default function Home() {
           </button>
 
           <div className="bg-softYellow/30 p-6 md:p-8 rounded-3xl border border-maroon/10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">
-              {cleanText(selectedCategory.label_nl)}
-            </h2>
-            <div className="italic text-maroon/70 mb-6">
-              {cleanText(selectedCategory.label_fr)}
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">{cleanText(selectedCategory.label_nl)}</h2>
+            <div className="italic text-maroon/70 mb-6">{cleanText(selectedCategory.label_fr)}</div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white rounded-2xl p-6 border border-maroon/10">
@@ -239,6 +213,7 @@ export default function Home() {
                   {selectedCategory.related_definitions.map((defKey) => {
                     const def = zorgData.definitions[defKey];
                     if (!def) return null;
+
                     return (
                       <div key={defKey} className="p-5 rounded-xl border border-gray-100 shadow-sm">
                         <div className="text-lg font-bold font-poppins text-maroon">
@@ -246,14 +221,25 @@ export default function Home() {
                           <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
                         </div>
                         <p className="text-gray-700 mt-2">{cleanText(def.uitleg)}</p>
-                        <a
-                          href={def.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-block mt-3 text-maroon underline font-semibold text-sm"
-                        >
-                          Officiële Franse info →
-                        </a>
+
+                        <div className="flex flex-wrap gap-3 mt-3">
+                          <a
+                            href={def.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-maroon underline font-semibold text-sm"
+                          >
+                            Officiële Franse info →
+                          </a>
+                          <a
+                            href={nlTranslateUrl(def.url)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-maroon underline font-semibold text-sm"
+                          >
+                            Lees in NL →
+                          </a>
+                        </div>
                       </div>
                     );
                   })}
@@ -266,6 +252,7 @@ export default function Home() {
                   {selectedCategory.related_contacts.map((contactKey) => {
                     const c = zorgData.contacten[contactKey];
                     if (!c) return null;
+
                     return (
                       <div key={contactKey} className="p-5 rounded-xl border-l-8 border-maroon shadow-md border border-gray-100">
                         <div className="text-lg font-bold font-poppins text-maroon">{cleanText(c.naam)}</div>
@@ -328,14 +315,25 @@ export default function Home() {
                     <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
                   </div>
                   <p className="text-gray-700 mt-2">{cleanText(def.uitleg)}</p>
-                  <a
-                    href={def.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-3 text-maroon underline font-semibold text-sm"
-                  >
-                    Officiële Franse info →
-                  </a>
+
+                  <div className="flex flex-wrap gap-3 mt-3">
+                    <a
+                      href={def.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-maroon underline font-semibold text-sm"
+                    >
+                      Officiële Franse info →
+                    </a>
+                    <a
+                      href={nlTranslateUrl(def.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-maroon underline font-semibold text-sm"
+                    >
+                      Lees in NL →
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
@@ -390,14 +388,25 @@ export default function Home() {
                 <div key={key} className="bg-softYellow/25 p-5 rounded-2xl border border-maroon/10">
                   <div className="text-lg font-bold font-poppins text-maroon">{cleanText(ann.naam)}</div>
                   <p className="text-gray-700 mt-2">{cleanText(ann.uitleg)}</p>
-                  <a
-                    href={ann.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-3 bg-maroon text-white px-5 py-3 rounded-full font-bold hover:opacity-90 transition"
-                  >
-                    Open officiële annuaire →
-                  </a>
+
+                  <div className="flex flex-wrap gap-3 mt-3">
+                    <a
+                      href={ann.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-maroon text-white px-5 py-3 rounded-full font-bold hover:opacity-90 transition"
+                    >
+                      Open officieel →
+                    </a>
+                    <a
+                      href={nlTranslateUrl(ann.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-softYellow text-maroon px-5 py-3 rounded-full font-bold border border-maroon/20 hover:border-maroon transition"
+                    >
+                      Lees in NL →
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
