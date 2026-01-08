@@ -269,7 +269,8 @@ export default function Home() {
     }
   };
 
-  const current = (v: View) => (view === v ? 'page' : undefined);
+ const current = (v: View): React.AriaAttributes['aria-current'] =>
+  view === v ? 'page' : undefined;
 
   return (
     <main className="min-h-screen px-6 md:px-12 py-10 max-w-7xl mx-auto font-mulish leading-[1.8em]">
