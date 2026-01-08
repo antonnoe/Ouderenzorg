@@ -18,7 +18,6 @@ function nlTranslateUrl(url: string) {
   return `https://translate.google.com/translate?sl=auto&tl=nl&u=${u}`;
 }
 
-// alias → extra zoektermen (OR)
 const queryAliases: Array<[string, string[]]> = [
   ['thuiszorg', ['ssiad', 'soins infirmiers', 'domicile']],
   ['zorg aan huis', ['ssiad', 'domicile']],
@@ -110,106 +109,68 @@ type FooterAction =
   | { kind: 'view'; view: View; q?: string }
   | { kind: 'category'; categoryId: string };
 
-function FooterNav({
-  onAction
-}: {
-  onAction: (a: FooterAction) => void;
-}) {
-  const linkClass =
-    'text-sm text-gray-700 hover:text-maroon hover:underline underline-offset-4 transition';
-
+function FooterNav({ onAction }: { onAction: (a: FooterAction) => void }) {
   return (
-    <footer className="mt-14 border-t border-maroon/10 pt-10 pb-10">
-      <div className="bg-softYellow/20 border border-maroon/10 rounded-3xl p-6 md:p-8">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-          <div className="max-w-xl">
-            <div className="text-xl font-bold font-poppins text-maroon">Snel naar</div>
-            <p className="text-sm text-gray-700 mt-2">
-              Kies een onderwerp. U blijft binnen dit dashboard. Officiële Franse bronnen zijn beschikbaar als verdieping (met “Lees in NL”).
-            </p>
+    <footer className="zk-footer">
+      <div className="zk-footer-box">
+        <div className="zk-footer-title">Snel naar</div>
+        <div className="zk-footer-sub">
+          Kies een onderwerp. U blijft binnen dit dashboard. Officiële Franse bronnen zijn beschikbaar als verdieping (met “Lees in NL”).
+        </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                onClick={() => onAction({ kind: 'home' })}
-                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
-              >
-                Dashboard
-              </button>
-              <button
-                onClick={() => onAction({ kind: 'view', view: 'definities' })}
-                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
-              >
-                Begrippen
-              </button>
-              <button
-                onClick={() => onAction({ kind: 'view', view: 'contacten' })}
-                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
-              >
-                Nuttige nummers
-              </button>
-              <button
-                onClick={() => onAction({ kind: 'view', view: 'annuaires' })}
-                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
-              >
-                Annuaires
-              </button>
-            </div>
+        <div className="zk-footer-grid">
+          <div>
+            <div className="zk-col-title">Thuis wonen</div>
+            <ul>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Thuiszorg' })}>Thuiszorg</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'SSIAD' })}>Thuisverpleging (SSIAD)</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Tijdelijk verblijf' })}>Tijdelijk verblijf</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'annuaires' })}>Zoek diensten per departement</button></li>
+            </ul>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 flex-1">
-            <div>
-              <div className="text-sm font-bold font-poppins text-maroon mb-3">Thuis wonen</div>
-              <ul className="space-y-2">
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Thuiszorg' })}>Thuiszorg</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'SSIAD' })}>Thuisverpleging (SSIAD)</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Tijdelijk verblijf' })}>Tijdelijk verblijf</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires' })}>Zoek diensten per departement</button></li>
-              </ul>
-            </div>
+          <div>
+            <div className="zk-col-title">Verzorgingshuis</div>
+            <ul>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Verzorgingshuis' })}>Wat is een EHPAD?</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'EHPAD' })}>Begrip & uitleg</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'annuaires', q: 'EHPAD' })}>EHPAD zoeken (annuaire)</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: '39 77' })}>Meldpunt misstanden</button></li>
+            </ul>
+          </div>
 
-            <div>
-              <div className="text-sm font-bold font-poppins text-maroon mb-3">Verzorgingshuis</div>
-              <ul className="space-y-2">
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Verzorgingshuis' })}>Wat is een EHPAD?</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'EHPAD' })}>Begrip & uitleg</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires', q: 'EHPAD' })}>EHPAD zoeken (annuaire)</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'contacten', view: 'contacten' as any, q: '39 77' } as any)}>Meldpunt misstanden</button></li>
-              </ul>
-            </div>
+          <div>
+            <div className="zk-col-title">Mantelzorg</div>
+            <ul>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'category', categoryId: 'repit' })}>Overzicht mantelzorg</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'PFR' })}>PFR (répit)</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'respijtzorg' })}>Respijtzorg</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Avec nos proches' })}>Hulplijn overbelasting</button></li>
+            </ul>
+          </div>
 
-            <div>
-              <div className="text-sm font-bold font-poppins text-maroon mb-3">Mantelzorg</div>
-              <ul className="space-y-2">
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'category', categoryId: 'repit' })}>Overzicht mantelzorg</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'PFR' })}>PFR (répit)</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'respijtzorg' })}>Respijtzorg</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Avec nos proches' })}>Hulplijn overbelasting</button></li>
-              </ul>
-            </div>
+          <div>
+            <div className="zk-col-title">Rechten & geld</div>
+            <ul>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'category', categoryId: 'rechten_financien' })}>Overzicht rechten</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'APA' })}>APA (toelage)</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Santé Info Droits' })}>Santé Info Droits</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: '0 800 360 360' })}>Numéro handicap</button></li>
+            </ul>
+          </div>
 
-            <div>
-              <div className="text-sm font-bold font-poppins text-maroon mb-3">Rechten & geld</div>
-              <ul className="space-y-2">
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'category', categoryId: 'rechten_financien' })}>Overzicht rechten</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'APA' })}>APA (toelage)</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Santé Info Droits' })}>Santé Info Droits</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: '0 800 360 360' })}>Numéro handicap</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-sm font-bold font-poppins text-maroon mb-3">Gidsen & diensten</div>
-              <ul className="space-y-2">
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires', q: 'CLIC' })}>CLIC / PIL (loket)</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires' })}>Alle annuaires</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: '112' })}>Noodnummers</button></li>
-                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities' })}>Alle begrippen</button></li>
-              </ul>
-            </div>
+          <div>
+            <div className="zk-col-title">Gidsen & diensten</div>
+            <ul>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'annuaires', q: 'CLIC' })}>CLIC / PIL (loket)</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'annuaires' })}>Alle annuaires</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: '112' })}>Noodnummers</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities' })}>Alle begrippen</button></li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-8 text-xs text-gray-600">
+        <div className="zk-footnote">
           Tip: gebruik “Lees in NL” bij officiële pagina’s als u Frans lastig vindt.
         </div>
       </div>
@@ -290,18 +251,15 @@ export default function Home() {
   const cardBase =
     'group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md';
 
-  // footer action handler
   const handleFooterAction = (a: FooterAction) => {
     if (a.kind === 'home') {
       goHome();
       return;
     }
-
     if (a.kind === 'category') {
       openCategoryById(a.categoryId);
       return;
     }
-
     if (a.kind === 'view') {
       setSelectedCategory(null);
       setView(a.view);
@@ -310,6 +268,8 @@ export default function Home() {
       return;
     }
   };
+
+  const current = (v: View) => (view === v ? 'page' : undefined);
 
   return (
     <main className="min-h-screen px-6 md:px-12 py-10 max-w-7xl mx-auto font-mulish leading-[1.8em]">
@@ -322,21 +282,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {[
-              ['Dashboard', 'dashboard'],
-              ['Begrippen', 'definities'],
-              ['Nuttige nummers', 'contacten'],
-              ['Annuaires', 'annuaires']
-            ].map(([label, v]) => (
-              <button
-                key={v}
-                onClick={() => (v === 'dashboard' ? goHome() : setView(v as View))}
-                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-softYellow/60 transition"
-              >
-                {label}
-              </button>
-            ))}
+          {/* Top navigation: huisstijl-tegels */}
+          <div className="zk-topnav">
+            <button className="zk-tab" aria-current={current('dashboard')} onClick={goHome}>Dashboard</button>
+            <button className="zk-tab" aria-current={current('definities')} onClick={() => { setSelectedCategory(null); setView('definities'); }}>Begrippen</button>
+            <button className="zk-tab" aria-current={current('contacten')} onClick={() => { setSelectedCategory(null); setView('contacten'); }}>Nuttige nummers</button>
+            <button className="zk-tab" aria-current={current('annuaires')} onClick={() => { setSelectedCategory(null); setView('annuaires'); }}>Annuaires</button>
           </div>
         </div>
       </header>
@@ -446,10 +397,6 @@ export default function Home() {
 
       {view === 'category' && selectedCategory && (
         <section className="space-y-8">
-          <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
-            ← Terug naar dashboard
-          </button>
-
           <div className="bg-softYellow/20 p-6 md:p-8 rounded-3xl border border-maroon/10">
             <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">{cleanText(selectedCategory.label_nl)}</h2>
             <div className="italic text-maroon/70 mb-6">{cleanText(selectedCategory.label_fr)}</div>
@@ -510,10 +457,6 @@ export default function Home() {
 
       {view === 'definities' && (
         <section className="space-y-6">
-          <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
-            ← Terug naar dashboard
-          </button>
-
           <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Begrippen (NL → FR)</h2>
             <p className="text-gray-700 mb-5">Typ om te filteren (ook op synoniemen zoals “thuiszorg”, “verzorgingshuis”).</p>
@@ -553,10 +496,6 @@ export default function Home() {
 
       {view === 'contacten' && (
         <section className="space-y-6">
-          <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
-            ← Terug naar dashboard
-          </button>
-
           <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Nuttige nummers</h2>
             <p className="text-gray-700 mb-5">Typ om te filteren. Bij spoed: bel 15 (SAMU) of 112.</p>
@@ -586,10 +525,6 @@ export default function Home() {
 
       {view === 'annuaires' && (
         <section className="space-y-6">
-          <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
-            ← Terug naar dashboard
-          </button>
-
           <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Officiële annuaires</h2>
             <p className="text-gray-700 mb-6">Gebruik als verdieping of om lokale contactpunten te vinden.</p>
@@ -627,7 +562,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* FOOTER NAV on all pages */}
       <FooterNav onAction={handleFooterAction} />
     </main>
   );
