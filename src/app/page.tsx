@@ -33,46 +33,38 @@ const queryAliases: Array<[string, string[]]> = [
   ['autonomie', ['apa']]
 ];
 
-// Minimal line icons (inline SVG)
+// Icons (inline SVG)
 function IconBox({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="w-20 h-20 rounded-2xl bg-softYellow/40 border border-maroon/10 flex items-center justify-center">
-      {children}
-    </div>
-  );
+  return <div className="zk-tile-icon">{children}</div>;
 }
-
 function ArrowIcon() {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M5 12h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       <path d="M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
-
 function IconMapPins() {
   return (
-    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M12 21s6-5.2 6-10a6 6 0 10-12 0c0 4.8 6 10 6 10z" stroke="currentColor" strokeWidth="1.8" />
       <circle cx="12" cy="11" r="2" stroke="currentColor" strokeWidth="1.8" />
     </svg>
   );
 }
-
 function IconHomeCare() {
   return (
-    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M3 11l9-8 9 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M5 10v10h14V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M9.5 14.5l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
-
 function IconBuilding() {
   return (
-    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M4 21V3h10v18" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
       <path d="M14 21V8h6v13" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
       <path d="M7 6h4M7 9h4M7 12h4M7 15h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -80,10 +72,9 @@ function IconBuilding() {
     </svg>
   );
 }
-
 function IconPhone() {
   return (
-    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path
         d="M22 16.9v2a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 3.2 2 2 0 014 1h2a2 2 0 012 1.7c.1.9.3 1.7.6 2.5a2 2 0 01-.5 2.1L7.9 8.1a16 16 0 006 6l.8-.8a2 2 0 012.1-.5c.8.3 1.6.5 2.5.6A2 2 0 0122 16.9z"
         stroke="currentColor"
@@ -93,10 +84,9 @@ function IconPhone() {
     </svg>
   );
 }
-
 function IconBook() {
   return (
-    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M4 19a2 2 0 012-2h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       <path d="M6 3h14v18H6a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="currentColor" strokeWidth="1.8" />
       <path d="M9 7h8M9 11h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -248,18 +238,9 @@ export default function Home() {
     else goHome();
   };
 
-  const cardBase =
-    'group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md';
-
   const handleFooterAction = (a: FooterAction) => {
-    if (a.kind === 'home') {
-      goHome();
-      return;
-    }
-    if (a.kind === 'category') {
-      openCategoryById(a.categoryId);
-      return;
-    }
+    if (a.kind === 'home') { goHome(); return; }
+    if (a.kind === 'category') { openCategoryById(a.categoryId); return; }
     if (a.kind === 'view') {
       setSelectedCategory(null);
       setView(a.view);
@@ -269,21 +250,18 @@ export default function Home() {
     }
   };
 
- const current = (v: View): React.AriaAttributes['aria-current'] =>
-  view === v ? 'page' : undefined;
+  const current = (v: View): React.AriaAttributes['aria-current'] =>
+    view === v ? 'page' : undefined;
 
   return (
-    <main className="min-h-screen px-6 md:px-12 py-10 max-w-7xl mx-auto font-mulish leading-[1.8em]">
-      <header className="mb-8 md:mb-10">
+    <main className="min-h-screen px-6 md:px-12 py-8 max-w-7xl mx-auto">
+      <header className="zk-header">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">Mijn Zorgkompas</h1>
-            <p className="text-base md:text-lg text-gray-700 mt-2">
-              NL-dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.
-            </p>
+            <h1 className="zk-title font-bold font-poppins">Mijn Zorgkompas</h1>
+            <p className="zk-subtitle">NL-dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.</p>
           </div>
 
-          {/* Top navigation: huisstijl-tegels */}
           <div className="zk-topnav">
             <button className="zk-tab" aria-current={current('dashboard')} onClick={goHome}>Dashboard</button>
             <button className="zk-tab" aria-current={current('definities')} onClick={() => { setSelectedCategory(null); setView('definities'); }}>Begrippen</button>
@@ -296,77 +274,71 @@ export default function Home() {
       {view === 'dashboard' && (
         <section className="space-y-10">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-5">Start met een vraag</h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-4">Start met een vraag</h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <button onClick={() => setView('annuaires')} className={`${cardBase} text-left p-7`}>
+            <div className="zk-tiles zk-tiles--primary">
+              <button onClick={() => setView('annuaires')} className="zk-tile">
                 <IconBox><IconMapPins /></IconBox>
-                <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Lokale informatiepunten</div>
-                  <div className="text-sm text-gray-600 mt-2">Vind CLIC / PIL in uw departement (eerste loket).</div>
-                </div>
-                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+                <div className="zk-tile-h">Lokale informatiepunten</div>
+                <div className="zk-tile-p">Vind CLIC / PIL in uw departement (eerste loket).</div>
+                <div className="zk-tile-arrow"><ArrowIcon /></div>
+                <div className="zk-tile-bar" />
               </button>
 
               <button
                 onClick={() => openCategory(zorgData.categories.find((c) => c.id === 'wonen_zorg') || zorgData.categories[0])}
-                className={`${cardBase} text-left p-7`}
+                className="zk-tile"
               >
                 <IconBox><IconBuilding /></IconBox>
-                <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Verpleeghuis / EHPAD</div>
-                  <div className="text-sm text-gray-600 mt-2">Begrippen + officiële zoekroutes voor instellingen.</div>
-                </div>
-                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+                <div className="zk-tile-h">Verpleeghuis / EHPAD</div>
+                <div className="zk-tile-p">Begrippen + officiële zoekroutes voor instellingen.</div>
+                <div className="zk-tile-arrow"><ArrowIcon /></div>
+                <div className="zk-tile-bar" />
               </button>
 
               <button
                 onClick={() => openCategory(zorgData.categories.find((c) => c.id === 'repit') || zorgData.categories[0])}
-                className={`${cardBase} text-left p-7`}
+                className="zk-tile"
               >
                 <IconBox><IconHomeCare /></IconBox>
-                <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Thuiszorg & mantelzorg</div>
-                  <div className="text-sm text-gray-600 mt-2">Thuisverpleging, respijtzorg en hulp voor naasten.</div>
-                </div>
-                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+                <div className="zk-tile-h">Thuiszorg & mantelzorg</div>
+                <div className="zk-tile-p">Thuisverpleging, respijtzorg en hulp voor naasten.</div>
+                <div className="zk-tile-arrow"><ArrowIcon /></div>
+                <div className="zk-tile-bar" />
               </button>
 
-              <button onClick={() => setView('contacten')} className={`${cardBase} text-left p-7`}>
+              <button onClick={() => setView('contacten')} className="zk-tile">
                 <IconBox><IconPhone /></IconBox>
-                <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Nuttige nummers</div>
-                  <div className="text-sm text-gray-600 mt-2">Spoed, hulplijnen, advies en ondersteuning.</div>
-                </div>
-                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+                <div className="zk-tile-h">Nuttige nummers</div>
+                <div className="zk-tile-p">Spoed, hulplijnen, advies en ondersteuning.</div>
+                <div className="zk-tile-arrow"><ArrowIcon /></div>
+                <div className="zk-tile-bar" />
               </button>
             </div>
           </div>
 
-          <div className="bg-softYellow/20 border border-maroon/10 rounded-3xl p-6 md:p-8">
+          <div className="zk-panel" style={{ background: 'rgba(255,253,231,.18)' }}>
             <div className="flex items-center gap-3 mb-4">
               <IconBook />
               <h3 className="text-2xl font-bold font-poppins text-maroon">Kies een onderwerp</h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="zk-tiles zk-tiles--cats">
               {zorgData.categories.map((cat) => (
-                <button key={cat.id} onClick={() => openCategory(cat)} className={`${cardBase} text-left p-7`}>
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">{cleanText(cat.label_nl)}</div>
-                  <div className="text-sm italic text-maroon/70 mt-2">{cleanText(cat.label_fr)}</div>
-                  <div className="text-sm text-gray-700 mt-3">{cleanText(cat.description)}</div>
-                  <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
+                <button key={cat.id} onClick={() => openCategory(cat)} className="zk-tile">
+                  <div className="zk-tile-h">{cleanText(cat.label_nl)}</div>
+                  <div className="zk-tile-p" style={{ fontStyle: 'italic', color: 'rgba(128,0,0,.7)' }}>
+                    {cleanText(cat.label_fr)}
+                  </div>
+                  <div className="zk-tile-p">{cleanText(cat.description)}</div>
+                  <div className="zk-tile-arrow"><ArrowIcon /></div>
+                  <div className="zk-tile-bar" />
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="rounded-3xl p-6 md:p-8 border border-maroon/10 bg-white">
+          <div className="zk-panel">
             <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">Snel zoeken (begrippen + nummers)</h3>
             <p className="text-gray-700 mb-4">Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.</p>
 
@@ -375,21 +347,11 @@ export default function Home() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Zoekterm…"
-                className="w-full md:flex-1 px-4 py-3 rounded-xl border border-maroon/20 focus:outline-none focus:ring-2 focus:ring-maroon/20"
+                className="w-full md:flex-1 px-4 py-3 rounded-xl border border-black/15 focus:outline-none focus:ring-2 focus:ring-maroon/20"
               />
               <div className="flex gap-2">
-                <button
-                  onClick={() => setView('definities')}
-                  className="px-5 py-3 rounded-xl bg-softYellow/60 text-maroon font-bold border border-maroon/20 hover:border-maroon transition"
-                >
-                  Begrippen
-                </button>
-                <button
-                  onClick={() => setView('contacten')}
-                  className="px-5 py-3 rounded-xl bg-softYellow/60 text-maroon font-bold border border-maroon/20 hover:border-maroon transition"
-                >
-                  Nummers
-                </button>
+                <button onClick={() => setView('definities')} className="zk-btn zk-btn--soft">Begrippen</button>
+                <button onClick={() => setView('contacten')} className="zk-btn zk-btn--soft">Nummers</button>
               </div>
             </div>
           </div>
@@ -398,12 +360,12 @@ export default function Home() {
 
       {view === 'category' && selectedCategory && (
         <section className="space-y-8">
-          <div className="bg-softYellow/20 p-6 md:p-8 rounded-3xl border border-maroon/10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">{cleanText(selectedCategory.label_nl)}</h2>
-            <div className="italic text-maroon/70 mb-6">{cleanText(selectedCategory.label_fr)}</div>
+          <div className="zk-panel" style={{ background: 'rgba(255,253,231,.18)' }}>
+            <h2 className="text-3xl md:text-4xl font-bold font-poppins text-maroon">{cleanText(selectedCategory.label_nl)}</h2>
+            <div className="text-sm italic mt-2" style={{ color: 'rgba(128,0,0,.7)' }}>{cleanText(selectedCategory.label_fr)}</div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl p-6 border border-maroon/10 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              <div className="zk-panel">
                 <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">Belangrijke begrippen</h3>
                 <div className="space-y-4">
                   {selectedCategory.related_definitions.map((defKey) => {
@@ -411,20 +373,18 @@ export default function Home() {
                     if (!def) return null;
 
                     return (
-                      <div key={defKey} className="p-5 rounded-xl border border-maroon/10 bg-white">
-                        <div className="text-lg font-bold font-poppins text-maroon">
+                      <div key={defKey} className="zk-card">
+                        <div className="zk-card-h">
                           {cleanText(def.term_nl)}{' '}
-                          <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
+                          <span className="font-normal" style={{ color: 'rgba(128,0,0,.70)' }}>
+                            ({cleanText(def.term_fr)})
+                          </span>
                         </div>
-                        <p className="text-gray-700 mt-2">{cleanText(def.uitleg)}</p>
+                        <div className="zk-card-p">{cleanText(def.uitleg)}</div>
 
-                        <div className="flex flex-wrap gap-3 mt-3">
-                          <a href={def.url} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
-                            Officiële Franse info →
-                          </a>
-                          <a href={nlTranslateUrl(def.url)} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
-                            Lees in NL →
-                          </a>
+                        <div className="zk-card-actions">
+                          <a href={def.url} target="_blank" rel="noopener noreferrer" className="zk-btn zk-btn--primary">Open officieel →</a>
+                          <a href={nlTranslateUrl(def.url)} target="_blank" rel="noopener noreferrer" className="zk-btn zk-btn--soft">Lees in NL →</a>
                         </div>
                       </div>
                     );
@@ -432,7 +392,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 border border-maroon/10 shadow-sm">
+              <div className="zk-panel">
                 <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">Hulplijnen & contact</h3>
                 <div className="space-y-4">
                   {selectedCategory.related_contacts.map((contactKey) => {
@@ -440,12 +400,14 @@ export default function Home() {
                     if (!c) return null;
 
                     return (
-                      <div key={contactKey} className="p-5 rounded-xl border border-maroon/10 bg-white">
-                        <div className="text-lg font-bold font-poppins text-maroon">{cleanText(c.naam)}</div>
-                        <div className="text-maroon text-2xl font-mono font-bold my-2">{cleanText(c.nummer)}</div>
-                        {c.email && <div className="text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
-                        <p className="text-gray-700 text-sm mt-2">{cleanText(c.details)}</p>
-                        <p className="text-xs text-gray-500 italic mt-2">Bereikbaar: {cleanText(c.tijden)}</p>
+                      <div key={contactKey} className="zk-card">
+                        <div className="zk-card-h">{cleanText(c.naam)}</div>
+                        <div className="mt-2" style={{ color: 'var(--maroon)', fontSize: 22, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontWeight: 900 }}>
+                          {cleanText(c.nummer)}
+                        </div>
+                        {c.email && <div className="mt-2 text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
+                        <div className="zk-card-p" style={{ fontSize: 14 }}>{cleanText(c.details)}</div>
+                        <div className="mt-2 text-xs" style={{ color: '#666', fontStyle: 'italic' }}>Bereikbaar: {cleanText(c.tijden)}</div>
                       </div>
                     );
                   })}
@@ -458,7 +420,7 @@ export default function Home() {
 
       {view === 'definities' && (
         <section className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
+          <div className="zk-panel">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Begrippen (NL → FR)</h2>
             <p className="text-gray-700 mb-5">Typ om te filteren (ook op synoniemen zoals “thuiszorg”, “verzorgingshuis”).</p>
 
@@ -466,28 +428,24 @@ export default function Home() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Zoek in begrippen…"
-              className="w-full px-4 py-3 rounded-xl border border-maroon/20 focus:outline-none focus:ring-2 focus:ring-maroon/20 mb-6"
+              className="w-full px-4 py-3 rounded-xl border border-black/15 focus:outline-none focus:ring-2 focus:ring-maroon/20 mb-6"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredDefinitions.map(([key, def]) => (
-                <div key={key} className={`group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md p-6`}>
-                  <div className="text-lg font-bold font-poppins text-maroon">
+                <div key={key} className="zk-card">
+                  <div className="zk-card-h">
                     {cleanText(def.term_nl)}{' '}
-                    <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
+                    <span className="font-normal" style={{ color: 'rgba(128,0,0,.70)' }}>
+                      ({cleanText(def.term_fr)})
+                    </span>
                   </div>
-                  <p className="text-gray-700 mt-2">{cleanText(def.uitleg)}</p>
+                  <div className="zk-card-p">{cleanText(def.uitleg)}</div>
 
-                  <div className="flex flex-wrap gap-3 mt-4">
-                    <a href={def.url} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
-                      Officiële Franse info →
-                    </a>
-                    <a href={nlTranslateUrl(def.url)} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
-                      Lees in NL →
-                    </a>
+                  <div className="zk-card-actions">
+                    <a href={def.url} target="_blank" rel="noopener noreferrer" className="zk-btn zk-btn--primary">Open officieel →</a>
+                    <a href={nlTranslateUrl(def.url)} target="_blank" rel="noopener noreferrer" className="zk-btn zk-btn--soft">Lees in NL →</a>
                   </div>
-
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </div>
               ))}
             </div>
@@ -497,7 +455,7 @@ export default function Home() {
 
       {view === 'contacten' && (
         <section className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
+          <div className="zk-panel">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Nuttige nummers</h2>
             <p className="text-gray-700 mb-5">Typ om te filteren. Bij spoed: bel 15 (SAMU) of 112.</p>
 
@@ -505,18 +463,19 @@ export default function Home() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Zoek in nummers…"
-              className="w-full px-4 py-3 rounded-xl border border-maroon/20 focus:outline-none focus:ring-2 focus:ring-maroon/20 mb-6"
+              className="w-full px-4 py-3 rounded-xl border border-black/15 focus:outline-none focus:ring-2 focus:ring-maroon/20 mb-6"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredContacts.map(([key, c]) => (
-                <div key={key} className={`group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md p-6`}>
-                  <div className="text-lg font-bold font-poppins text-maroon">{cleanText(c.naam)}</div>
-                  <div className="text-maroon text-2xl font-mono font-bold my-2">{cleanText(c.nummer)}</div>
-                  {c.email && <div className="text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
-                  <p className="text-gray-700 text-sm mt-2">{cleanText(c.details)}</p>
-                  <p className="text-xs text-gray-500 italic mt-2">Bereikbaar: {cleanText(c.tijden)}</p>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
+                <div key={key} className="zk-card">
+                  <div className="zk-card-h">{cleanText(c.naam)}</div>
+                  <div className="mt-2" style={{ color: 'var(--maroon)', fontSize: 22, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontWeight: 900 }}>
+                    {cleanText(c.nummer)}
+                  </div>
+                  {c.email && <div className="mt-2 text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
+                  <div className="zk-card-p" style={{ fontSize: 14 }}>{cleanText(c.details)}</div>
+                  <div className="mt-2 text-xs" style={{ color: '#666', fontStyle: 'italic' }}>Bereikbaar: {cleanText(c.tijden)}</div>
                 </div>
               ))}
             </div>
@@ -526,36 +485,20 @@ export default function Home() {
 
       {view === 'annuaires' && (
         <section className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 md:p-8 border border-maroon/10">
+          <div className="zk-panel">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Officiële annuaires</h2>
             <p className="text-gray-700 mb-6">Gebruik als verdieping of om lokale contactpunten te vinden.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(zorgData.annuaires).map(([key, ann]) => (
-                <div key={key} className={`group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md p-6`}>
-                  <div className="text-lg font-bold font-poppins text-maroon">{cleanText(ann.naam)}</div>
-                  <p className="text-gray-700 mt-2">{cleanText(ann.uitleg)}</p>
+                <div key={key} className="zk-card">
+                  <div className="zk-card-h">{cleanText(ann.naam)}</div>
+                  <div className="zk-card-p">{cleanText(ann.uitleg)}</div>
 
-                  <div className="flex flex-wrap gap-3 mt-4">
-                    <a
-                      href={ann.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block bg-maroon text-white px-5 py-3 rounded-full font-bold hover:opacity-90 transition"
-                    >
-                      Open officieel →
-                    </a>
-                    <a
-                      href={nlTranslateUrl(ann.url)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block bg-softYellow/60 text-maroon px-5 py-3 rounded-full font-bold border border-maroon/20 hover:border-maroon transition"
-                    >
-                      Lees in NL →
-                    </a>
+                  <div className="zk-card-actions">
+                    <a href={ann.url} target="_blank" rel="noopener noreferrer" className="zk-btn zk-btn--primary">Open officieel →</a>
+                    <a href={nlTranslateUrl(ann.url)} target="_blank" rel="noopener noreferrer" className="zk-btn zk-btn--soft">Lees in NL →</a>
                   </div>
-
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </div>
               ))}
             </div>
