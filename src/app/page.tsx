@@ -175,6 +175,11 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<ZorgCategory | null>(null);
   const [q, setQ] = useState('');
 
+  const scrollToResults = () => {
+    const el = document.getElementById('zk-results');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const queryList = useMemo(() => {
     const base = q.trim().toLowerCase();
     if (!base) return [] as string[];
@@ -266,11 +271,16 @@ export default function Home() {
     view === v ? 'page' : undefined;
 
   const doSearch = () => {
-    // Slim: eerst definities, dan contacten, dan annuaires
-    if (filteredDefinitions.length > 0) setView('definities');
-    else if (filteredContacts.length > 0) setView('contacten');
-    else setView('annuaires');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (view === 'dashboard') {
+      // Slim: eerst definities, dan contacten, dan annuaires
+      if (filteredDefinitions.length > 0) setView('definities');
+      else if (filteredContacts.length > 0) setView('contacten');
+      else setView('annuaires');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    // In tabs: zoekactie = scroll naar resultaten + teller zichtbaar
+    scrollToResults();
   };
 
   return (
@@ -279,7 +289,9 @@ export default function Home() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <h1 className="zk-title font-bold font-poppins">Mijn Zorgkompas</h1>
-            <p className="zk-subtitle">NL-dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.</p>
+            <p className="zk-subtitle">
+              Infofrankrijk.com dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.
+            </p>
           </div>
 
           <div className="zk-topnav">
@@ -456,12 +468,16 @@ export default function Home() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Zoek in begrippen…"
-                onKeyDown={(e) => { if (e.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onKeyDown={(e) => { if (e.key === 'Enter') doSearch(); }}
               />
-              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Zoeken</button>
+              <button type="button" onClick={doSearch}>Zoeken</button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="mt-4 text-sm" style={{ color: '#666' }}>
+              {q.trim() ? `${filteredDefinitions.length} resultaat/resultaten voor “${q.trim()}”.` : `Toont alle begrippen (${filteredDefinitions.length}).`}
+            </div>
+
+            <div id="zk-results" className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {filteredDefinitions.map(([key, def]) => (
                 <div key={key} className="zk-card">
                   <div className="zk-card-h">
@@ -494,12 +510,16 @@ export default function Home() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Zoek in nummers…"
-                onKeyDown={(e) => { if (e.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onKeyDown={(e) => { if (e.key === 'Enter') doSearch(); }}
               />
-              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Zoeken</button>
+              <button type="button" onClick={doSearch}>Zoeken</button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="mt-4 text-sm" style={{ color: '#666' }}>
+              {q.trim() ? `${filteredContacts.length} resultaat/resultaten voor “${q.trim()}”.` : `Toont alle nummers (${filteredContacts.length}).`}
+            </div>
+
+            <div id="zk-results" className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {filteredContacts.map(([key, c]) => (
                 <div key={key} className="zk-card">
                   <div className="zk-card-h">{cleanText(c.naam)}</div>
@@ -527,12 +547,16 @@ export default function Home() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Zoek in annuaires… (bijv. CLIC, EHPAD)"
-                onKeyDown={(e) => { if (e.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onKeyDown={(e) => { if (e.key === 'Enter') doSearch(); }}
               />
-              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Zoeken</button>
+              <button type="button" onClick={doSearch}>Zoeken</button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="mt-4 text-sm" style={{ color: '#666' }}>
+              {q.trim() ? `${filteredAnnuaires.length} resultaat/resultaten voor “${q.trim()}”.` : `Toont alle annuaires (${Object.entries(zorgData.annuaires).length}).`}
+            </div>
+
+            <div id="zk-results" className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {(q.trim() ? filteredAnnuaires : Object.entries(zorgData.annuaires)).map(([key, ann]) => (
                 <div key={key} className="zk-card">
                   <div className="zk-card-h">{cleanText(ann.naam)}</div>
