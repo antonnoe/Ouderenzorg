@@ -13,7 +13,6 @@ function cleanText(s?: string) {
   return s.replace(/\s*\[cite:[^\]]+\]\s*/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-// Google Translate wrapper (FR/auto -> NL)
 function nlTranslateUrl(url: string) {
   const u = encodeURIComponent(url);
   return `https://translate.google.com/translate?sl=auto&tl=nl&u=${u}`;
@@ -35,12 +34,82 @@ const queryAliases: Array<[string, string[]]> = [
   ['autonomie', ['apa']]
 ];
 
+// Minimal line icons (inline SVG)
+function IconBox({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-20 h-20 rounded-2xl bg-softYellow/40 border border-maroon/10 flex items-center justify-center">
+      {children}
+    </div>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="text-maroon">
+      <path d="M5 12h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconMapPins() {
+  return (
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+      <path d="M12 21s6-5.2 6-10a6 6 0 10-12 0c0 4.8 6 10 6 10z" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="12" cy="11" r="2" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function IconHomeCare() {
+  return (
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+      <path d="M3 11l9-8 9 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 10v10h14V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9.5 14.5l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconBuilding() {
+  return (
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+      <path d="M4 21V3h10v18" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M14 21V8h6v13" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M7 6h4M7 9h4M7 12h4M7 15h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M17 11h1M17 14h1M17 17h1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconPhone() {
+  return (
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+      <path
+        d="M22 16.9v2a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 3.2 2 2 0 014 1h2a2 2 0 012 1.7c.1.9.3 1.7.6 2.5a2 2 0 01-.5 2.1L7.9 8.1a16 16 0 006 6l.8-.8a2 2 0 012.1-.5c.8.3 1.6.5 2.5.6A2 2 0 0122 16.9z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconBook() {
+  return (
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" className="text-maroon">
+      <path d="M4 19a2 2 0 012-2h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M6 3h14v18H6a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M9 7h8M9 11h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const [view, setView] = useState<View>('dashboard');
   const [selectedCategory, setSelectedCategory] = useState<ZorgCategory | null>(null);
   const [q, setQ] = useState('');
 
-  // OR-query list: raw query + expansions
   const queryList = useMemo(() => {
     const base = q.trim().toLowerCase();
     if (!base) return [] as string[];
@@ -64,7 +133,6 @@ export default function Home() {
       const hay = [key, cleanText(def.term_nl), cleanText(def.term_fr), cleanText(def.uitleg), def.url || '']
         .join(' ')
         .toLowerCase();
-
       return queryList.some((term) => hay.includes(term));
     });
   }, [queryList]);
@@ -84,7 +152,6 @@ export default function Home() {
       ]
         .join(' ')
         .toLowerCase();
-
       return queryList.some((term) => hay.includes(term));
     });
   }, [queryList]);
@@ -102,73 +169,172 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // shared card style (like screenshot)
+  const cardBase =
+    'group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md';
+
   return (
-    <main className="min-h-screen p-6 md:p-12 max-w-6xl mx-auto font-mulish leading-[1.8em]">
+    <main className="min-h-screen px-6 md:px-12 py-10 max-w-7xl mx-auto font-mulish leading-[1.8em]">
       <header className="mb-8 md:mb-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">Mijn Zorgkompas</h1>
+            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">
+              Mijn Zorgkompas
+            </h1>
             <p className="text-base md:text-lg text-gray-700 mt-2">
               NL-dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={goHome}
-              className="px-4 py-2 rounded-xl border border-maroon/25 text-maroon font-semibold hover:bg-softYellow transition"
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => setView('definities')}
-              className="px-4 py-2 rounded-xl border border-maroon/25 text-maroon font-semibold hover:bg-softYellow transition"
-            >
-              Begrippen
-            </button>
-            <button
-              onClick={() => setView('contacten')}
-              className="px-4 py-2 rounded-xl border border-maroon/25 text-maroon font-semibold hover:bg-softYellow transition"
-            >
-              Nuttige nummers
-            </button>
-            <button
-              onClick={() => setView('annuaires')}
-              className="px-4 py-2 rounded-xl border border-maroon/25 text-maroon font-semibold hover:bg-softYellow transition"
-            >
-              Annuaires
-            </button>
+            {[
+              ['Dashboard', 'dashboard'],
+              ['Begrippen', 'definities'],
+              ['Nuttige nummers', 'contacten'],
+              ['Annuaires', 'annuaires']
+            ].map(([label, v]) => (
+              <button
+                key={v}
+                onClick={() => (v === 'dashboard' ? goHome() : setView(v as View))}
+                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-softYellow/60 transition"
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
       </header>
 
+      {/* DASHBOARD */}
       {view === 'dashboard' && (
         <section className="space-y-10">
-          <div className="bg-softYellow/35 border border-maroon/10 rounded-3xl p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-3">Start met een vraag</h2>
-            <p className="text-gray-700 mb-6">
-              Kies wat het beste past. U krijgt daarna NL-uitleg, belangrijke begrippen en directe contactopties.
-              Officiële Franse bronnen blijven beschikbaar als verdieping.
-            </p>
+          {/* Top tiles like screenshot */}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-5">
+              Start met een vraag
+            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <button
+                onClick={() => setView('annuaires')}
+                className={`${cardBase} text-left p-7`}
+              >
+                <IconBox><IconMapPins /></IconBox>
+                <div className="mt-6">
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
+                    Lokale informatiepunten
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    Vind CLIC / PIL in uw departement (eerste loket).
+                  </div>
+                </div>
+                <div className="absolute bottom-5 right-5">
+                  <ArrowIcon />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+              </button>
+
+              <button
+                onClick={() => openCategory(zorgData.categories.find(c => c.id === 'wonen_zorg') || zorgData.categories[0])}
+                className={`${cardBase} text-left p-7`}
+              >
+                <IconBox><IconBuilding /></IconBox>
+                <div className="mt-6">
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
+                    Verpleeghuis / EHPAD
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    Begrippen + officiële zoekroutes voor instellingen.
+                  </div>
+                </div>
+                <div className="absolute bottom-5 right-5">
+                  <ArrowIcon />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+              </button>
+
+              <button
+                onClick={() => openCategory(zorgData.categories.find(c => c.id === 'repit') || zorgData.categories[0])}
+                className={`${cardBase} text-left p-7`}
+              >
+                <IconBox><IconHomeCare /></IconBox>
+                <div className="mt-6">
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
+                    Thuiszorg & mantelzorg
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    Thuisverpleging, respijtzorg en hulp voor naasten.
+                  </div>
+                </div>
+                <div className="absolute bottom-5 right-5">
+                  <ArrowIcon />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+              </button>
+
+              <button
+                onClick={() => setView('contacten')}
+                className={`${cardBase} text-left p-7`}
+              >
+                <IconBox><IconPhone /></IconBox>
+                <div className="mt-6">
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
+                    Nuttige nummers
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    Spoed, hulplijnen, advies en ondersteuning.
+                  </div>
+                </div>
+                <div className="absolute bottom-5 right-5">
+                  <ArrowIcon />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
+              </button>
+            </div>
+          </div>
+
+          {/* Category chooser (cleaner) */}
+          <div className="bg-softYellow/20 border border-maroon/10 rounded-3xl p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <IconBook />
+              <h3 className="text-2xl font-bold font-poppins text-maroon">
+                Kies een onderwerp
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {zorgData.categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => openCategory(cat)}
-                  className="text-left p-6 rounded-2xl bg-white border-2 border-maroon/15 hover:border-maroon hover:bg-softYellow transition shadow-sm"
+                  className={`${cardBase} text-left p-7`}
                 >
-                  <h3 className="text-xl font-bold font-poppins text-maroon mb-1">{cleanText(cat.label_nl)}</h3>
-                  <div className="text-sm italic text-maroon/70 mb-3">{cleanText(cat.label_fr)}</div>
-                  <p className="text-gray-700 text-sm">{cleanText(cat.description)}</p>
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
+                    {cleanText(cat.label_nl)}
+                  </div>
+                  <div className="text-sm italic text-maroon/70 mt-2">
+                    {cleanText(cat.label_fr)}
+                  </div>
+                  <div className="text-sm text-gray-700 mt-3">
+                    {cleanText(cat.description)}
+                  </div>
+                  <div className="absolute bottom-5 right-5">
+                    <ArrowIcon />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </button>
               ))}
             </div>
           </div>
 
+          {/* Search block (clean) */}
           <div className="rounded-3xl p-6 md:p-8 border border-maroon/10 bg-white">
-            <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">Snel zoeken (begrippen + nummers)</h3>
-            <p className="text-gray-700 mb-4">Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.</p>
+            <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">
+              Snel zoeken (begrippen + nummers)
+            </h3>
+            <p className="text-gray-700 mb-4">
+              Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.
+            </p>
 
             <div className="flex flex-col md:flex-row gap-3 md:items-center">
               <input
@@ -180,13 +346,13 @@ export default function Home() {
               <div className="flex gap-2">
                 <button
                   onClick={() => setView('definities')}
-                  className="px-5 py-3 rounded-xl bg-softYellow text-maroon font-bold border border-maroon/20 hover:border-maroon transition"
+                  className="px-5 py-3 rounded-xl bg-softYellow/60 text-maroon font-bold border border-maroon/20 hover:border-maroon transition"
                 >
                   Begrippen
                 </button>
                 <button
                   onClick={() => setView('contacten')}
-                  className="px-5 py-3 rounded-xl bg-softYellow text-maroon font-bold border border-maroon/20 hover:border-maroon transition"
+                  className="px-5 py-3 rounded-xl bg-softYellow/60 text-maroon font-bold border border-maroon/20 hover:border-maroon transition"
                 >
                   Nummers
                 </button>
@@ -196,26 +362,34 @@ export default function Home() {
         </section>
       )}
 
+      {/* CATEGORY */}
       {view === 'category' && selectedCategory && (
-        <section className="space-y-10">
+        <section className="space-y-8">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
             ← Terug naar dashboard
           </button>
 
-          <div className="bg-softYellow/30 p-6 md:p-8 rounded-3xl border border-maroon/10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">{cleanText(selectedCategory.label_nl)}</h2>
-            <div className="italic text-maroon/70 mb-6">{cleanText(selectedCategory.label_fr)}</div>
+          <div className="bg-softYellow/20 p-6 md:p-8 rounded-3xl border border-maroon/10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">
+              {cleanText(selectedCategory.label_nl)}
+            </h2>
+            <div className="italic text-maroon/70 mb-6">
+              {cleanText(selectedCategory.label_fr)}
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl p-6 border border-maroon/10">
-                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">Belangrijke begrippen</h3>
+              <div className="bg-white rounded-2xl p-6 border border-maroon/10 shadow-sm">
+                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">
+                  Belangrijke begrippen
+                </h3>
+
                 <div className="space-y-4">
                   {selectedCategory.related_definitions.map((defKey) => {
                     const def = zorgData.definitions[defKey];
                     if (!def) return null;
 
                     return (
-                      <div key={defKey} className="p-5 rounded-xl border border-gray-100 shadow-sm">
+                      <div key={defKey} className="p-5 rounded-xl border border-maroon/10 bg-white">
                         <div className="text-lg font-bold font-poppins text-maroon">
                           {cleanText(def.term_nl)}{' '}
                           <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
@@ -246,15 +420,18 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 border border-maroon/10">
-                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">Hulplijnen & contact</h3>
+              <div className="bg-white rounded-2xl p-6 border border-maroon/10 shadow-sm">
+                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">
+                  Hulplijnen & contact
+                </h3>
+
                 <div className="space-y-4">
                   {selectedCategory.related_contacts.map((contactKey) => {
                     const c = zorgData.contacten[contactKey];
                     if (!c) return null;
 
                     return (
-                      <div key={contactKey} className="p-5 rounded-xl border-l-8 border-maroon shadow-md border border-gray-100">
+                      <div key={contactKey} className="p-5 rounded-xl border border-maroon/10 bg-white">
                         <div className="text-lg font-bold font-poppins text-maroon">{cleanText(c.naam)}</div>
                         <div className="text-maroon text-2xl font-mono font-bold my-2">{cleanText(c.nummer)}</div>
                         {c.email && <div className="text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
@@ -267,29 +444,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <div className="bg-maroon text-white p-6 md:p-8 rounded-3xl shadow-xl">
-            <h3 className="text-2xl font-bold mb-3 font-poppins">Lokale ondersteuning vinden</h3>
-            <p className="opacity-90 mb-5">
-              Als u niet weet waar te beginnen: start bij het lokale informatiepunt (CLIC / Point d’information local).
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {Object.entries(zorgData.annuaires).map(([key, ann]) => (
-                <a
-                  key={key}
-                  href={ann.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white text-maroon px-6 py-3 rounded-full font-bold hover:bg-softYellow transition shadow text-center"
-                >
-                  {cleanText(ann.naam)} →
-                </a>
-              ))}
-            </div>
-          </div>
         </section>
       )}
 
+      {/* DEFINITIES */}
       {view === 'definities' && (
         <section className="space-y-6">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -309,31 +467,22 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredDefinitions.map(([key, def]) => (
-                <div key={key} className="bg-softYellow/25 p-5 rounded-2xl border border-maroon/10">
+                <div key={key} className={`${cardBase} p-6`}>
                   <div className="text-lg font-bold font-poppins text-maroon">
                     {cleanText(def.term_nl)}{' '}
                     <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
                   </div>
                   <p className="text-gray-700 mt-2">{cleanText(def.uitleg)}</p>
 
-                  <div className="flex flex-wrap gap-3 mt-3">
-                    <a
-                      href={def.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-maroon underline font-semibold text-sm"
-                    >
+                  <div className="flex flex-wrap gap-3 mt-4">
+                    <a href={def.url} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
                       Officiële Franse info →
                     </a>
-                    <a
-                      href={nlTranslateUrl(def.url)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-maroon underline font-semibold text-sm"
-                    >
+                    <a href={nlTranslateUrl(def.url)} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
                       Lees in NL →
                     </a>
                   </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </div>
               ))}
             </div>
@@ -341,6 +490,7 @@ export default function Home() {
         </section>
       )}
 
+      {/* CONTACTEN */}
       {view === 'contacten' && (
         <section className="space-y-6">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -360,12 +510,13 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredContacts.map(([key, c]) => (
-                <div key={key} className="bg-white p-6 rounded-2xl border-l-8 border-maroon shadow-md border border-gray-100">
+                <div key={key} className={`${cardBase} p-6`}>
                   <div className="text-lg font-bold font-poppins text-maroon">{cleanText(c.naam)}</div>
                   <div className="text-maroon text-2xl font-mono font-bold my-2">{cleanText(c.nummer)}</div>
                   {c.email && <div className="text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
                   <p className="text-gray-700 text-sm mt-2">{cleanText(c.details)}</p>
                   <p className="text-xs text-gray-500 italic mt-2">Bereikbaar: {cleanText(c.tijden)}</p>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </div>
               ))}
             </div>
@@ -373,6 +524,7 @@ export default function Home() {
         </section>
       )}
 
+      {/* ANNUAIRES */}
       {view === 'annuaires' && (
         <section className="space-y-6">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -385,11 +537,11 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(zorgData.annuaires).map(([key, ann]) => (
-                <div key={key} className="bg-softYellow/25 p-5 rounded-2xl border border-maroon/10">
+                <div key={key} className={`${cardBase} p-6`}>
                   <div className="text-lg font-bold font-poppins text-maroon">{cleanText(ann.naam)}</div>
                   <p className="text-gray-700 mt-2">{cleanText(ann.uitleg)}</p>
 
-                  <div className="flex flex-wrap gap-3 mt-3">
+                  <div className="flex flex-wrap gap-3 mt-4">
                     <a
                       href={ann.url}
                       target="_blank"
@@ -402,11 +554,13 @@ export default function Home() {
                       href={nlTranslateUrl(ann.url)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block bg-softYellow text-maroon px-5 py-3 rounded-full font-bold border border-maroon/20 hover:border-maroon transition"
+                      className="inline-block bg-softYellow/60 text-maroon px-5 py-3 rounded-full font-bold border border-maroon/20 hover:border-maroon transition"
                     >
                       Lees in NL →
                     </a>
                   </div>
+
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </div>
               ))}
             </div>
