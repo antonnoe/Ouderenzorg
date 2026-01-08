@@ -4,114 +4,213 @@
       "id": "repit",
       "label_nl": "Respijtzorg & Mantelzorg",
       "label_fr": "Aide au répit",
-      "description": "Ondersteuning om de mantelzorger tijdelijk te ontlasten [cite: 156].",
+      "description": "Ondersteuning om de mantelzorger tijdelijk te ontlasten.",
       "related_definitions": ["PFR", "adj", "heb_temp"],
-      "related_contacts": ["instants_aidants", "avec_nos_proches"]
+      "related_contacts": ["instants_aidants", "avec_nos_proches", "au_bout_du_fil", "croix_rouge_chez_vous"]
     },
     {
       "id": "wonen_zorg",
       "label_nl": "Wonen & Medische Zorg",
       "label_fr": "Lieux d'accueil et de vie",
-      "description": "Informatie over zorginstellingen en medische ondersteuning thuis [cite: 156].",
+      "description": "Informatie over zorginstellingen en medische ondersteuning thuis.",
       "related_definitions": ["ehpad", "ssiad"],
-      "related_contacts": ["samu"]
+      "related_contacts": ["samu", "maltraitance", "numero_handicap", "sante_info_droits"]
     },
     {
       "id": "rechten_financien",
       "label_nl": "Rechten & Financiën",
       "label_fr": "Aides financières et droits",
-      "description": "Subsidies, zorgtoelagen en juridische ondersteuning [cite: 156].",
+      "description": "Subsidies, zorgtoelagen en juridische ondersteuning.",
       "related_definitions": ["apa"],
-      "related_contacts": ["maltraitance"]
+      "related_contacts": ["sante_info_droits", "numero_handicap"]
     }
   ],
   "definitions": {
     "PFR": {
-      "term_fr": "Plateforme d’accompagnement et de répit",
+      "term_fr": "Plateformes d’accompagnement et de répit",
       "term_nl": "Ondersteuningsplatform voor mantelzorgers",
-      "uitleg": "Biedt advies, ondersteuning en tijdelijke ontlasting voor naasten van ouderen of mensen met een beperking [cite: 119].",
-      "url": "https://www.pour-les-personnes-agees.gouv.fr/art-pfr"
+      "uitleg": "Biedt advies, ondersteuning en tijdelijke ontlasting voor naasten (mantelzorgers).",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/preserver-son-autonomie/a-qui-s-adresser/les-plateformes-d-accompagnement-et-de-repit"
     },
     "adj": {
       "term_fr": "Accueil de jour",
-      "term_nl": "Dagbesteding / Dagopvang",
-      "uitleg": "Opvang overdag om autonomie te behouden en naasten te ontlasten [cite: 68, 70].",
-      "url": "https://www.pour-les-personnes-agees.gouv.fr/art-adj"
+      "term_nl": "Dagopvang / dagbesteding",
+      "uitleg": "Opvang overdag om autonomie te behouden en naasten te ontlasten.",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/vivre-a-domicile/solutions-d-accueil-temporaire/aller-a-l-accueil-de-jour"
     },
     "ehpad": {
       "term_fr": "EHPAD",
-      "term_nl": "Verpleeghuis (Medisch)",
-      "uitleg": "Medische zorginstelling voor ouderen die dagelijks hulp en zorg nodig hebben [cite: 151, 152].",
-      "url": "https://www.pour-les-personnes-agees.gouv.fr/art-ehpad"
+      "term_nl": "Verzorgingshuis / verpleeghuis (medisch)",
+      "uitleg": "Maison de retraite médicalisée voor ouderen die dagelijks hulp en zorg nodig hebben.",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/vivre-dans-un-ehpad/les-differents-etablissements-medicalises/les-ehpad"
     },
     "apa": {
-      "term_fr": "APA (Allocation Personnalisée d'Autonomie)",
-      "term_nl": "Zorgtoelage Autonomie",
-      "uitleg": "Financiële tegemoetkoming voor ouderen met verlies van autonomie [cite: 109].",
-      "url": "https://www.service-public.fr/particuliers/vosdroits/F10009"
+      "term_fr": "APA (Allocation personnalisée d'autonomie)",
+      "term_nl": "Zorgtoelage autonomie",
+      "uitleg": "Financiële tegemoetkoming voor 60+ met verlies van autonomie (thuis of in een instelling).",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/preserver-son-autonomie/perte-d-autonomie-evaluation-et-droits/l-allocation-personnalisee-d-autonomie-apa"
     },
     "ssiad": {
-      "term_fr": "SSIAD",
-      "term_nl": "Thuisverpleging",
-      "uitleg": "Verpleegkundige zorg aan huis op medisch voorschrift [cite: 133, 134].",
-      "url": "https://www.pour-les-personnes-agees.gouv.fr/art-ssiad"
+      "term_fr": "SSIAD (Services de soins infirmiers à domicile)",
+      "term_nl": "Thuisverpleging (zorg aan huis)",
+      "uitleg": "Verpleegkundige zorg aan huis op medisch voorschrift.",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/vivre-a-domicile/beneficier-de-soins-a-domicile/les-ssiad-services-de-soins-infirmiers-a-domicile"
     },
     "heb_temp": {
       "term_fr": "Hébergement temporaire",
       "term_nl": "Tijdelijk verblijf",
-      "uitleg": "Kortdurende opvang in een instelling om de mantelzorger rust te geven [cite: 106, 107].",
-      "url": "https://www.pour-les-personnes-agees.gouv.fr/art-heb-temp"
+      "uitleg": "Kortdurende opvang in een instelling of via accueil familial om de mantelzorger rust te geven.",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/vivre-a-domicile/solutions-d-accueil-temporaire/l-hebergement-temporaire-ce-qu-il-faut-savoir"
     }
   },
   "contacten": {
-    "instants_aidants": {
-      "naam": "Instants Aidants (MSA)",
-      "nummer": "0805 690 630",
-      "details": "Gratis ondersteuning voor alle mantelzorgers boven de 18 jaar [cite: 1].",
-      "tijden": "Ma–Vr, 09:00–17:00 [cite: 2]."
+    "samu": {
+      "naam": "SAMU (medische spoed)",
+      "nummer": "15",
+      "details": "Noodnummer voor dringende medische hulp.",
+      "tijden": "24/7"
     },
-    "france_parkinson": {
-      "naam": "France Parkinson",
-      "nummer": "01 43 43 43 15",
-      "email": "soutien@franceparkinson.fr",
-      "details": "Luisterend oor en ondersteuning bij Parkinson [cite: 5].",
-      "tijden": "Ma–Vr, 09:30–12:30 [cite: 5]."
+    "europees_noodnummer": {
+      "naam": "Europees noodnummer",
+      "nummer": "112",
+      "details": "Noodnummer (werkt overal in de EU).",
+      "tijden": "24/7"
     },
-    "solitud_ecoute": {
-      "naam": "Solitud'écoute",
-      "nummer": "0 800 47 47 88",
-      "details": "Anonieme hulplijn voor 50-plussers die zich eenzaam voelen [cite: 42].",
-      "tijden": "Dagelijks, 15:00–20:00 [cite: 42]."
+    "politie": {
+      "naam": "Politie",
+      "nummer": "17",
+      "details": "Noodnummer politie.",
+      "tijden": "24/7"
+    },
+    "brandweer": {
+      "naam": "Brandweer",
+      "nummer": "18",
+      "details": "Noodnummer brandweer.",
+      "tijden": "24/7"
+    },
+    "sms_voor_slechthorenden": {
+      "naam": "Nood-SMS (slechthorenden)",
+      "nummer": "114",
+      "details": "Noodnummer via SMS/video/chat voor doven/slechthorenden.",
+      "tijden": "24/7"
     },
     "maltraitance": {
       "naam": "Agir contre les maltraitances",
       "nummer": "39 77",
-      "details": "Nationaal nummer tegen ouderenmishandeling en misstanden [cite: 37].",
-      "tijden": "24/7 bereikbaar via diverse kanalen [cite: 40]."
+      "details": "Nationaal nummer tegen ouderenmishandeling en misstanden.",
+      "tijden": "In principe 7/7 (zie officiële kanalen)"
     },
-    "samu": {
-      "naam": "SAMU (Medische Spoed)",
-      "nummer": "15",
-      "details": "Noodnummer voor dringende medische hulp [cite: 61, 62].",
-      "tijden": "24/7 bereikbaar [cite: 61]."
+    "instants_aidants": {
+      "naam": "Instants aidants",
+      "nummer": "0805 690 630",
+      "details": "Gratis ondersteuning voor mantelzorgers (MSA).",
+      "tijden": "Ma–Vr, 09:00–17:00"
+    },
+    "ecoute_cannabis": {
+      "naam": "Écoute cannabis",
+      "nummer": "0 980 980 940",
+      "details": "Informatie en hulp rond cannabis.",
+      "tijden": "Accessible de 8h à 2h, 7 jours sur 7"
+    },
+    "france_parkinson_ligne_d_coute": {
+      "naam": "France Parkinson",
+      "nummer": "01 43 43 43 15",
+      "details": "Luisterend oor en ondersteuning bij Parkinson.",
+      "tijden": "Ma–Vr, 09:30–12:30"
     },
     "avec_nos_proches": {
       "naam": "Avec nos proches",
       "nummer": "01 84 72 94 72",
-      "details": "Hulplijn om uitputting bij mantelzorgers te voorkomen [cite: 8].",
-      "tijden": "Dagelijks, 08:00–22:00 [cite: 8]."
+      "details": "Hulplijn om overbelasting bij mantelzorgers te voorkomen.",
+      "tijden": "Dagelijks, 08:00–22:00"
+    },
+    "centre_dappel_et_de_conseil_sur_la_d_fic": {
+      "naam": "Centre d'appel et de conseil sur la déficience visuelle de l'ARRADV",
+      "nummer": "0 800 013 010",
+      "details": "Informatie en advies bij slechtziendheid.",
+      "tijden": "Du lundi au vendredi de 9h30 à 17h30"
+    },
+    "numero_handicap": {
+      "naam": "Numéro handicap",
+      "nummer": "0 800 360 360",
+      "details": "Nationaal nummer voor vragen rond handicap.",
+      "tijden": "Du lundi au vendredi de 9h à 18h"
+    },
+    "sortir_plus": {
+      "naam": "Sortir Plus",
+      "nummer": "0 971 090 971",
+      "details": "Begeleiding om er veilig op uit te gaan (o.a. ouderen).",
+      "tijden": "Du lundi au vendredi de 8h à 18h"
+    },
+    "sante_info_droits": {
+      "naam": "Santé Info Droits",
+      "nummer": "01 53 62 40 30",
+      "details": "Juridische info over gezondheid en rechten.",
+      "tijden": "Du lundi au vendredi de 14h à 18h"
+    },
+    "agri_coute": {
+      "naam": "Agri'écoute",
+      "nummer": "09 69 39 29 19",
+      "details": "Luisterlijn voor mensen uit de landbouwsector.",
+      "tijden": "24h/24, 7j/7"
+    },
+    "solitud_ecoute": {
+      "naam": "Solitud'écoute",
+      "nummer": "0 800 47 47 88",
+      "details": "Anonieme hulplijn tegen eenzaamheid (50+).",
+      "tijden": "Dagelijks, 15:00–20:00"
+    },
+    "drogues_info_service": {
+      "naam": "Drogues Info Service",
+      "nummer": "0 800 23 13 13",
+      "details": "Informatie en hulp rond drugsgebruik.",
+      "tijden": "Lundi–samedi, 8h–2h; dimanche, 10h–2h"
+    },
+    "alcool_info_service": {
+      "naam": "Alcool Info Service",
+      "nummer": "0 980 980 930",
+      "details": "Informatie en hulp rond alcoholgebruik.",
+      "tijden": "7j/7, 8h–2h"
+    },
+    "canicule_info_service": {
+      "naam": "Canicule Info service",
+      "nummer": "0 800 06 66 66",
+      "details": "Informatie bij hittegolf (canicule).",
+      "tijden": "Seizoensgebonden (alleen tijdens hitteperiodes)"
+    },
+    "au_bout_du_fil": {
+      "naam": "Au bout du fil",
+      "nummer": "01 45 20 22 20",
+      "details": "Telefoongesprekken om isolement te doorbreken.",
+      "tijden": "Du lundi au vendredi de 10h à 17h"
+    },
+    "croix_rouge_chez_vous": {
+      "naam": "Croix-Rouge chez vous",
+      "nummer": "0 800 858 858",
+      "details": "Telefoonlijn van het Rode Kruis voor steun en informatie.",
+      "tijden": "7j/7, 8h–20h"
     }
   },
   "annuaires": {
     "ehpad_zoeker": {
-      "naam": "EHPAD & Prijsvergelijker",
+      "naam": "EHPAD & prijsvergelijker",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-et-comparateur-de-prix-et-restes-a-charge",
-      "uitleg": "Zoek en vergelijk prijzen van verpleeghuizen [cite: 161]."
+      "uitleg": "Zoek EHPAD’s en vergelijk prijzen/restant te betalen (volgens officiële gegevens)."
     },
     "clic_zoeker": {
-      "naam": "CLIC / Lokale informatiepunten",
+      "naam": "Points d’information locaux (CLIC / PIL)",
       "url": "https://www.pour-les-personnes-agees.gouv.fr/departements/pil",
-      "uitleg": "Vind het lokale zorgloket in uw departement [cite: 122]."
+      "uitleg": "Vind het lokale zorgloket in uw departement (eerste aanspreekpunt)."
+    },
+    "pfr_zoeker": {
+      "naam": "PFR per departement",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/departements/pfr",
+      "uitleg": "Vind platforms d’accompagnement et de répit (mantelzorg-ondersteuning) per departement."
+    },
+    "aide_soins_domicile": {
+      "naam": "Services d’aide et de soins à domicile",
+      "url": "https://www.pour-les-personnes-agees.gouv.fr/departements/ssiad",
+      "uitleg": "Zoek SAAD/SSIAD/SPASAD (hulp en/of zorg aan huis) per departement."
     }
   }
 }
