@@ -18,6 +18,7 @@ function nlTranslateUrl(url: string) {
   return `https://translate.google.com/translate?sl=auto&tl=nl&u=${u}`;
 }
 
+/** Zoeken: synoniemen/alias → extra termen */
 const queryAliases: Array<[string, string[]]> = [
   ['thuiszorg', ['ssiad', 'soins infirmiers', 'domicile']],
   ['zorg aan huis', ['ssiad', 'domicile']],
@@ -30,7 +31,8 @@ const queryAliases: Array<[string, string[]]> = [
   ['respijtzorg', ['répit', 'pfr', 'heb_temp']],
   ['mantelzorg', ['aidant', 'pfr']],
   ['zorgtoelage', ['apa']],
-  ['autonomie', ['apa']]
+  ['autonomie', ['apa']],
+  ['clic', ['clic', 'pil', "point d'information local", 'point information local', 'information local']]
 ];
 
 // Icons (inline SVG)
@@ -39,7 +41,7 @@ function IconBox({ children }: { children: React.ReactNode }) {
 }
 function ArrowIcon() {
   return (
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path d="M5 12h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       <path d="M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -47,7 +49,7 @@ function ArrowIcon() {
 }
 function IconMapPins() {
   return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M12 21s6-5.2 6-10a6 6 0 10-12 0c0 4.8 6 10 6 10z" stroke="currentColor" strokeWidth="1.8" />
       <circle cx="12" cy="11" r="2" stroke="currentColor" strokeWidth="1.8" />
     </svg>
@@ -55,7 +57,7 @@ function IconMapPins() {
 }
 function IconHomeCare() {
   return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M3 11l9-8 9 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M5 10v10h14V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M9.5 14.5l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -64,7 +66,7 @@ function IconHomeCare() {
 }
 function IconBuilding() {
   return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M4 21V3h10v18" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
       <path d="M14 21V8h6v13" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
       <path d="M7 6h4M7 9h4M7 12h4M7 15h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -74,7 +76,7 @@ function IconBuilding() {
 }
 function IconPhone() {
   return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path
         d="M22 16.9v2a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 3.2 2 2 0 014 1h2a2 2 0 012 1.7c.1.9.3 1.7.6 2.5a2 2 0 01-.5 2.1L7.9 8.1a16 16 0 006 6l.8-.8a2 2 0 012.1-.5c.8.3 1.6.5 2.5.6A2 2 0 0122 16.9z"
         stroke="currentColor"
@@ -86,7 +88,7 @@ function IconPhone() {
 }
 function IconBook() {
   return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-maroon">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" className="text-maroon">
       <path d="M4 19a2 2 0 012-2h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       <path d="M6 3h14v18H6a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="currentColor" strokeWidth="1.8" />
       <path d="M9 7h8M9 11h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -145,7 +147,7 @@ function FooterNav({ onAction }: { onAction: (a: FooterAction) => void }) {
               <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'category', categoryId: 'rechten_financien' })}>Overzicht rechten</button></li>
               <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'definities', q: 'APA' })}>APA (toelage)</button></li>
               <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Santé Info Droits' })}>Santé Info Droits</button></li>
-              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: '0 800 360 360' })}>Numéro handicap</button></li>
+              <li><button className="zk-footer-link" onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Numéro handicap' })}>Numéro handicap</button></li>
             </ul>
           </div>
 
@@ -219,6 +221,16 @@ export default function Home() {
     });
   }, [queryList]);
 
+  const filteredAnnuaires = useMemo(() => {
+    const entries = Object.entries(zorgData.annuaires || {});
+    if (queryList.length === 0) return entries;
+
+    return entries.filter(([key, a]) => {
+      const hay = [key, cleanText(a.naam), cleanText(a.uitleg), a.url || ''].join(' ').toLowerCase();
+      return queryList.some((term) => hay.includes(term));
+    });
+  }, [queryList]);
+
   const openCategory = (cat: ZorgCategory) => {
     setSelectedCategory(cat);
     setView('category');
@@ -253,6 +265,14 @@ export default function Home() {
   const current = (v: View): React.AriaAttributes['aria-current'] =>
     view === v ? 'page' : undefined;
 
+  const doSearch = () => {
+    // Slim: eerst definities, dan contacten, dan annuaires
+    if (filteredDefinitions.length > 0) setView('definities');
+    else if (filteredContacts.length > 0) setView('contacten');
+    else setView('annuaires');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <main className="min-h-screen px-6 md:px-12 py-8 max-w-7xl mx-auto">
       <header className="zk-header">
@@ -263,7 +283,7 @@ export default function Home() {
           </div>
 
           <div className="zk-topnav">
-            <button className="zk-tab" aria-current={current('dashboard')} onClick={goHome}>Dashboard</button>
+            <button className="zk-tab zk-tab--home" aria-current={current('dashboard')} onClick={goHome}>Dashboard</button>
             <button className="zk-tab" aria-current={current('definities')} onClick={() => { setSelectedCategory(null); setView('definities'); }}>Begrippen</button>
             <button className="zk-tab" aria-current={current('contacten')} onClick={() => { setSelectedCategory(null); setView('contacten'); }}>Nuttige nummers</button>
             <button className="zk-tab" aria-current={current('annuaires')} onClick={() => { setSelectedCategory(null); setView('annuaires'); }}>Annuaires</button>
@@ -340,18 +360,25 @@ export default function Home() {
 
           <div className="zk-panel">
             <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">Snel zoeken (begrippen + nummers)</h3>
-            <p className="text-gray-700 mb-4">Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.</p>
+            <p className="text-gray-700 mb-4">
+              Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “CLIC”, of een nummer zoals “39 77” (meldpunt ouderenmishandeling).
+            </p>
 
-            <div className="flex flex-col md:flex-row gap-3 md:items-center">
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Zoekterm…"
-                className="w-full md:flex-1 px-4 py-3 rounded-xl border border-black/15 focus:outline-none focus:ring-2 focus:ring-maroon/20"
-              />
-              <div className="flex gap-2">
+            <div className="flex flex-col gap-3">
+              <div className="zk-searchbar">
+                <input
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Doorzoek de tool (begrippen, nummers, annuaires)…"
+                  onKeyDown={(e) => { if (e.key === 'Enter') doSearch(); }}
+                />
+                <button type="button" onClick={doSearch}>Zoeken</button>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
                 <button onClick={() => setView('definities')} className="zk-btn zk-btn--soft">Begrippen</button>
-                <button onClick={() => setView('contacten')} className="zk-btn zk-btn--soft">Nummers</button>
+                <button onClick={() => setView('contacten')} className="zk-btn zk-btn--soft">Nuttige nummers</button>
+                <button onClick={() => setView('annuaires')} className="zk-btn zk-btn--soft">Annuaires</button>
               </div>
             </div>
           </div>
@@ -422,16 +449,19 @@ export default function Home() {
         <section className="space-y-6">
           <div className="zk-panel">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Begrippen (NL → FR)</h2>
-            <p className="text-gray-700 mb-5">Typ om te filteren (ook op synoniemen zoals “thuiszorg”, “verzorgingshuis”).</p>
+            <p className="text-gray-700 mb-5">Typ om te filteren (ook op synoniemen zoals “thuiszorg”, “verzorgingshuis”, “CLIC”).</p>
 
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Zoek in begrippen…"
-              className="w-full px-4 py-3 rounded-xl border border-black/15 focus:outline-none focus:ring-2 focus:ring-maroon/20 mb-6"
-            />
+            <div className="zk-searchbar" style={{ maxWidth: 780 }}>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Zoek in begrippen…"
+                onKeyDown={(e) => { if (e.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              />
+              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Zoeken</button>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {filteredDefinitions.map(([key, def]) => (
                 <div key={key} className="zk-card">
                   <div className="zk-card-h">
@@ -459,14 +489,17 @@ export default function Home() {
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Nuttige nummers</h2>
             <p className="text-gray-700 mb-5">Typ om te filteren. Bij spoed: bel 15 (SAMU) of 112.</p>
 
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Zoek in nummers…"
-              className="w-full px-4 py-3 rounded-xl border border-black/15 focus:outline-none focus:ring-2 focus:ring-maroon/20 mb-6"
-            />
+            <div className="zk-searchbar" style={{ maxWidth: 780 }}>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Zoek in nummers…"
+                onKeyDown={(e) => { if (e.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              />
+              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Zoeken</button>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {filteredContacts.map(([key, c]) => (
                 <div key={key} className="zk-card">
                   <div className="zk-card-h">{cleanText(c.naam)}</div>
@@ -487,10 +520,20 @@ export default function Home() {
         <section className="space-y-6">
           <div className="zk-panel">
             <h2 className="text-3xl font-bold font-poppins text-maroon mb-2">Officiële annuaires</h2>
-            <p className="text-gray-700 mb-6">Gebruik als verdieping of om lokale contactpunten te vinden.</p>
+            <p className="text-gray-700 mb-6">Gebruik als verdieping of om lokale contactpunten te vinden (bijv. CLIC / PIL).</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(zorgData.annuaires).map(([key, ann]) => (
+            <div className="zk-searchbar" style={{ maxWidth: 780 }}>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Zoek in annuaires… (bijv. CLIC, EHPAD)"
+                onKeyDown={(e) => { if (e.key === 'Enter') window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              />
+              <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Zoeken</button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              {(q.trim() ? filteredAnnuaires : Object.entries(zorgData.annuaires)).map(([key, ann]) => (
                 <div key={key} className="zk-card">
                   <div className="zk-card-h">{cleanText(ann.naam)}</div>
                   <div className="zk-card-p">{cleanText(ann.uitleg)}</div>
