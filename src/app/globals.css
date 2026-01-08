@@ -4,24 +4,169 @@
 
 :root {
   --maroon: #800000;
+  --text: #111111;
+  --muted: #5b5b5b;
+  --border: rgba(128, 0, 0, 0.12);
+  --soft: rgba(255, 253, 231, 0.6);
 }
 
-body {
-  color: #111;
-  background: white;
-  /* Ruime regelafstand voor optimale leesbaarheid en rust [cite: 2025-12-09] */
-  line-height: 1.8em;
+@layer base {
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    color: var(--text);
+    background: #ffffff;
+    font-family: 'Mulish', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--maroon);
+    font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: var(--maroon);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  button {
+    font-family: inherit;
+  }
 }
 
-/* Koppen in Poppins kleur Maroon [cite: 2025-12-09] */
-h1, h2, h3, h4 {
+/* ===== Top navigation (huisstijl-tegels) ===== */
+.zk-topnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.zk-topnav .zk-tab {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: #fff;
   color: var(--maroon);
-  font-family: 'Poppins', sans-serif;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background 120ms ease;
 }
 
-/* Broodtekst in Mulish [cite: 2025-12-09] */
-p, li, span, div {
-  font-family: 'Mulish', sans-serif;
+.zk-topnav .zk-tab:hover {
+  border-color: rgba(128, 0, 0, 0.28);
+  background: var(--soft);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+.zk-topnav .zk-tab[aria-current="page"] {
+  background: var(--maroon);
+  color: #fff;
+  border-color: rgba(128, 0, 0, 0.55);
+}
+
+/* ===== Footer (5 kolommen desktop, 2 kolommen tablet, 1 kolom mobiel) ===== */
+.zk-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 56px;
+  padding-top: 28px;
+  padding-bottom: 36px;
+}
+
+.zk-footer .zk-footer-box {
+  background: rgba(255, 253, 231, 0.35);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 22px;
+}
+
+.zk-footer .zk-footer-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: var(--maroon);
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.zk-footer .zk-footer-sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.zk-footer .zk-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1100px) {
+  .zk-footer .zk-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .zk-footer .zk-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.zk-footer .zk-col-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: var(--maroon);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.zk-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.zk-footer li + li {
+  margin-top: 8px;
+}
+
+.zk-footer .zk-footer-link {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(128, 0, 0, 0.14);
+  background: #fff;
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.zk-footer .zk-footer-link:hover {
+  border-color: rgba(128, 0, 0, 0.30);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+  transform: translateY(-1px);
+}
+
+.zk-footer .zk-footnote {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12px;
 }
