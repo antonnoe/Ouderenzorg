@@ -105,6 +105,118 @@ function IconBook() {
   );
 }
 
+type FooterAction =
+  | { kind: 'home' }
+  | { kind: 'view'; view: View; q?: string }
+  | { kind: 'category'; categoryId: string };
+
+function FooterNav({
+  onAction
+}: {
+  onAction: (a: FooterAction) => void;
+}) {
+  const linkClass =
+    'text-sm text-gray-700 hover:text-maroon hover:underline underline-offset-4 transition';
+
+  return (
+    <footer className="mt-14 border-t border-maroon/10 pt-10 pb-10">
+      <div className="bg-softYellow/20 border border-maroon/10 rounded-3xl p-6 md:p-8">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+          <div className="max-w-xl">
+            <div className="text-xl font-bold font-poppins text-maroon">Snel naar</div>
+            <p className="text-sm text-gray-700 mt-2">
+              Kies een onderwerp. U blijft binnen dit dashboard. Officiële Franse bronnen zijn beschikbaar als verdieping (met “Lees in NL”).
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                onClick={() => onAction({ kind: 'home' })}
+                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => onAction({ kind: 'view', view: 'definities' })}
+                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
+              >
+                Begrippen
+              </button>
+              <button
+                onClick={() => onAction({ kind: 'view', view: 'contacten' })}
+                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
+              >
+                Nuttige nummers
+              </button>
+              <button
+                onClick={() => onAction({ kind: 'view', view: 'annuaires' })}
+                className="px-4 py-2 rounded-xl border border-maroon/20 text-maroon font-semibold hover:bg-white transition"
+              >
+                Annuaires
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 flex-1">
+            <div>
+              <div className="text-sm font-bold font-poppins text-maroon mb-3">Thuis wonen</div>
+              <ul className="space-y-2">
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Thuiszorg' })}>Thuiszorg</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'SSIAD' })}>Thuisverpleging (SSIAD)</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Tijdelijk verblijf' })}>Tijdelijk verblijf</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires' })}>Zoek diensten per departement</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="text-sm font-bold font-poppins text-maroon mb-3">Verzorgingshuis</div>
+              <ul className="space-y-2">
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'Verzorgingshuis' })}>Wat is een EHPAD?</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'EHPAD' })}>Begrip & uitleg</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires', q: 'EHPAD' })}>EHPAD zoeken (annuaire)</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'contacten', view: 'contacten' as any, q: '39 77' } as any)}>Meldpunt misstanden</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="text-sm font-bold font-poppins text-maroon mb-3">Mantelzorg</div>
+              <ul className="space-y-2">
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'category', categoryId: 'repit' })}>Overzicht mantelzorg</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'PFR' })}>PFR (répit)</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'respijtzorg' })}>Respijtzorg</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Avec nos proches' })}>Hulplijn overbelasting</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="text-sm font-bold font-poppins text-maroon mb-3">Rechten & geld</div>
+              <ul className="space-y-2">
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'category', categoryId: 'rechten_financien' })}>Overzicht rechten</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities', q: 'APA' })}>APA (toelage)</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: 'Santé Info Droits' })}>Santé Info Droits</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: '0 800 360 360' })}>Numéro handicap</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="text-sm font-bold font-poppins text-maroon mb-3">Gidsen & diensten</div>
+              <ul className="space-y-2">
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires', q: 'CLIC' })}>CLIC / PIL (loket)</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'annuaires' })}>Alle annuaires</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'contacten', q: '112' })}>Noodnummers</button></li>
+                <li><button className={linkClass} onClick={() => onAction({ kind: 'view', view: 'definities' })}>Alle begrippen</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 text-xs text-gray-600">
+          Tip: gebruik “Lees in NL” bij officiële pagina’s als u Frans lastig vindt.
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 export default function Home() {
   const [view, setView] = useState<View>('dashboard');
   const [selectedCategory, setSelectedCategory] = useState<ZorgCategory | null>(null);
@@ -169,18 +281,42 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // shared card style (like screenshot)
+  const openCategoryById = (id: string) => {
+    const cat = zorgData.categories.find((c) => c.id === id);
+    if (cat) openCategory(cat);
+    else goHome();
+  };
+
   const cardBase =
     'group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md';
+
+  // footer action handler
+  const handleFooterAction = (a: FooterAction) => {
+    if (a.kind === 'home') {
+      goHome();
+      return;
+    }
+
+    if (a.kind === 'category') {
+      openCategoryById(a.categoryId);
+      return;
+    }
+
+    if (a.kind === 'view') {
+      setSelectedCategory(null);
+      setView(a.view);
+      setQ(a.q || '');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+  };
 
   return (
     <main className="min-h-screen px-6 md:px-12 py-10 max-w-7xl mx-auto font-mulish leading-[1.8em]">
       <header className="mb-8 md:mb-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">
-              Mijn Zorgkompas
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold font-poppins text-maroon">Mijn Zorgkompas</h1>
             <p className="text-base md:text-lg text-gray-700 mt-2">
               NL-dashboard voor ouderenzorg in Frankrijk: begrijp, kies, en vind het juiste loket.
             </p>
@@ -205,136 +341,82 @@ export default function Home() {
         </div>
       </header>
 
-      {/* DASHBOARD */}
       {view === 'dashboard' && (
         <section className="space-y-10">
-          {/* Top tiles like screenshot */}
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-5">
-              Start met een vraag
-            </h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-poppins text-maroon mb-5">Start met een vraag</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <button
-                onClick={() => setView('annuaires')}
-                className={`${cardBase} text-left p-7`}
-              >
+              <button onClick={() => setView('annuaires')} className={`${cardBase} text-left p-7`}>
                 <IconBox><IconMapPins /></IconBox>
                 <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
-                    Lokale informatiepunten
-                  </div>
-                  <div className="text-sm text-gray-600 mt-2">
-                    Vind CLIC / PIL in uw departement (eerste loket).
-                  </div>
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Lokale informatiepunten</div>
+                  <div className="text-sm text-gray-600 mt-2">Vind CLIC / PIL in uw departement (eerste loket).</div>
                 </div>
-                <div className="absolute bottom-5 right-5">
-                  <ArrowIcon />
-                </div>
+                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
               </button>
 
               <button
-                onClick={() => openCategory(zorgData.categories.find(c => c.id === 'wonen_zorg') || zorgData.categories[0])}
+                onClick={() => openCategory(zorgData.categories.find((c) => c.id === 'wonen_zorg') || zorgData.categories[0])}
                 className={`${cardBase} text-left p-7`}
               >
                 <IconBox><IconBuilding /></IconBox>
                 <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
-                    Verpleeghuis / EHPAD
-                  </div>
-                  <div className="text-sm text-gray-600 mt-2">
-                    Begrippen + officiële zoekroutes voor instellingen.
-                  </div>
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Verpleeghuis / EHPAD</div>
+                  <div className="text-sm text-gray-600 mt-2">Begrippen + officiële zoekroutes voor instellingen.</div>
                 </div>
-                <div className="absolute bottom-5 right-5">
-                  <ArrowIcon />
-                </div>
+                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
               </button>
 
               <button
-                onClick={() => openCategory(zorgData.categories.find(c => c.id === 'repit') || zorgData.categories[0])}
+                onClick={() => openCategory(zorgData.categories.find((c) => c.id === 'repit') || zorgData.categories[0])}
                 className={`${cardBase} text-left p-7`}
               >
                 <IconBox><IconHomeCare /></IconBox>
                 <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
-                    Thuiszorg & mantelzorg
-                  </div>
-                  <div className="text-sm text-gray-600 mt-2">
-                    Thuisverpleging, respijtzorg en hulp voor naasten.
-                  </div>
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Thuiszorg & mantelzorg</div>
+                  <div className="text-sm text-gray-600 mt-2">Thuisverpleging, respijtzorg en hulp voor naasten.</div>
                 </div>
-                <div className="absolute bottom-5 right-5">
-                  <ArrowIcon />
-                </div>
+                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
               </button>
 
-              <button
-                onClick={() => setView('contacten')}
-                className={`${cardBase} text-left p-7`}
-              >
+              <button onClick={() => setView('contacten')} className={`${cardBase} text-left p-7`}>
                 <IconBox><IconPhone /></IconBox>
                 <div className="mt-6">
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
-                    Nuttige nummers
-                  </div>
-                  <div className="text-sm text-gray-600 mt-2">
-                    Spoed, hulplijnen, advies en ondersteuning.
-                  </div>
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">Nuttige nummers</div>
+                  <div className="text-sm text-gray-600 mt-2">Spoed, hulplijnen, advies en ondersteuning.</div>
                 </div>
-                <div className="absolute bottom-5 right-5">
-                  <ArrowIcon />
-                </div>
+                <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon" />
               </button>
             </div>
           </div>
 
-          {/* Category chooser (cleaner) */}
           <div className="bg-softYellow/20 border border-maroon/10 rounded-3xl p-6 md:p-8">
             <div className="flex items-center gap-3 mb-4">
               <IconBook />
-              <h3 className="text-2xl font-bold font-poppins text-maroon">
-                Kies een onderwerp
-              </h3>
+              <h3 className="text-2xl font-bold font-poppins text-maroon">Kies een onderwerp</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {zorgData.categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => openCategory(cat)}
-                  className={`${cardBase} text-left p-7`}
-                >
-                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">
-                    {cleanText(cat.label_nl)}
-                  </div>
-                  <div className="text-sm italic text-maroon/70 mt-2">
-                    {cleanText(cat.label_fr)}
-                  </div>
-                  <div className="text-sm text-gray-700 mt-3">
-                    {cleanText(cat.description)}
-                  </div>
-                  <div className="absolute bottom-5 right-5">
-                    <ArrowIcon />
-                  </div>
+                <button key={cat.id} onClick={() => openCategory(cat)} className={`${cardBase} text-left p-7`}>
+                  <div className="text-xl font-bold font-poppins text-maroon leading-tight">{cleanText(cat.label_nl)}</div>
+                  <div className="text-sm italic text-maroon/70 mt-2">{cleanText(cat.label_fr)}</div>
+                  <div className="text-sm text-gray-700 mt-3">{cleanText(cat.description)}</div>
+                  <div className="absolute bottom-5 right-5"><ArrowIcon /></div>
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Search block (clean) */}
           <div className="rounded-3xl p-6 md:p-8 border border-maroon/10 bg-white">
-            <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">
-              Snel zoeken (begrippen + nummers)
-            </h3>
-            <p className="text-gray-700 mb-4">
-              Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.
-            </p>
+            <h3 className="text-2xl font-bold font-poppins text-maroon mb-2">Snel zoeken (begrippen + nummers)</h3>
+            <p className="text-gray-700 mb-4">Voorbeelden: “Thuiszorg”, “Verzorgingshuis”, “APA”, “EHPAD”, “SSIAD”, “39 77”.</p>
 
             <div className="flex flex-col md:flex-row gap-3 md:items-center">
               <input
@@ -362,7 +444,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* CATEGORY */}
       {view === 'category' && selectedCategory && (
         <section className="space-y-8">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -370,19 +451,12 @@ export default function Home() {
           </button>
 
           <div className="bg-softYellow/20 p-6 md:p-8 rounded-3xl border border-maroon/10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">
-              {cleanText(selectedCategory.label_nl)}
-            </h2>
-            <div className="italic text-maroon/70 mb-6">
-              {cleanText(selectedCategory.label_fr)}
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 font-poppins text-maroon">{cleanText(selectedCategory.label_nl)}</h2>
+            <div className="italic text-maroon/70 mb-6">{cleanText(selectedCategory.label_fr)}</div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white rounded-2xl p-6 border border-maroon/10 shadow-sm">
-                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">
-                  Belangrijke begrippen
-                </h3>
-
+                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">Belangrijke begrippen</h3>
                 <div className="space-y-4">
                   {selectedCategory.related_definitions.map((defKey) => {
                     const def = zorgData.definitions[defKey];
@@ -397,20 +471,10 @@ export default function Home() {
                         <p className="text-gray-700 mt-2">{cleanText(def.uitleg)}</p>
 
                         <div className="flex flex-wrap gap-3 mt-3">
-                          <a
-                            href={def.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-maroon underline font-semibold text-sm"
-                          >
+                          <a href={def.url} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
                             Officiële Franse info →
                           </a>
-                          <a
-                            href={nlTranslateUrl(def.url)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-maroon underline font-semibold text-sm"
-                          >
+                          <a href={nlTranslateUrl(def.url)} target="_blank" rel="noopener noreferrer" className="text-maroon underline font-semibold text-sm">
                             Lees in NL →
                           </a>
                         </div>
@@ -421,10 +485,7 @@ export default function Home() {
               </div>
 
               <div className="bg-white rounded-2xl p-6 border border-maroon/10 shadow-sm">
-                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">
-                  Hulplijnen & contact
-                </h3>
-
+                <h3 className="text-2xl font-bold font-poppins text-maroon mb-4">Hulplijnen & contact</h3>
                 <div className="space-y-4">
                   {selectedCategory.related_contacts.map((contactKey) => {
                     const c = zorgData.contacten[contactKey];
@@ -447,7 +508,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* DEFINITIES */}
       {view === 'definities' && (
         <section className="space-y-6">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -467,7 +527,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredDefinitions.map(([key, def]) => (
-                <div key={key} className={`${cardBase} p-6`}>
+                <div key={key} className={`group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md p-6`}>
                   <div className="text-lg font-bold font-poppins text-maroon">
                     {cleanText(def.term_nl)}{' '}
                     <span className="font-normal text-maroon/70">({cleanText(def.term_fr)})</span>
@@ -482,6 +542,7 @@ export default function Home() {
                       Lees in NL →
                     </a>
                   </div>
+
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-maroon/80" />
                 </div>
               ))}
@@ -490,7 +551,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* CONTACTEN */}
       {view === 'contacten' && (
         <section className="space-y-6">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -510,7 +570,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredContacts.map(([key, c]) => (
-                <div key={key} className={`${cardBase} p-6`}>
+                <div key={key} className={`group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md p-6`}>
                   <div className="text-lg font-bold font-poppins text-maroon">{cleanText(c.naam)}</div>
                   <div className="text-maroon text-2xl font-mono font-bold my-2">{cleanText(c.nummer)}</div>
                   {c.email && <div className="text-sm font-semibold">E-mail: {cleanText(c.email)}</div>}
@@ -524,7 +584,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* ANNUAIRES */}
       {view === 'annuaires' && (
         <section className="space-y-6">
           <button onClick={goHome} className="text-maroon font-bold hover:underline font-poppins">
@@ -537,7 +596,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(zorgData.annuaires).map(([key, ann]) => (
-                <div key={key} className={`${cardBase} p-6`}>
+                <div key={key} className={`group relative bg-white rounded-2xl border border-maroon/10 hover:border-maroon/30 transition shadow-sm hover:shadow-md p-6`}>
                   <div className="text-lg font-bold font-poppins text-maroon">{cleanText(ann.naam)}</div>
                   <p className="text-gray-700 mt-2">{cleanText(ann.uitleg)}</p>
 
@@ -567,6 +626,9 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* FOOTER NAV on all pages */}
+      <FooterNav onAction={handleFooterAction} />
     </main>
   );
 }
